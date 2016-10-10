@@ -7,6 +7,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Carts\Carts;
 use Promotions\Promotions;
+use Users\Users;
 /**
  * Carts Controller
  *
@@ -34,7 +35,7 @@ class CartsController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function addToCart($productId,$qunatity)
+    public function addToCart($productId,$qunatity,$token=null,$user_id=null)
     {
 		header('Content-Type: application/json');
 		header('Access-Control-Allow-Origin: *');  		
@@ -45,6 +46,26 @@ class CartsController extends AppController
 		$arrAddedProduct=array();
 		$cartDetails = array();
 		//$this->request->session()->destroy('CART');
+
+		if($user_id!=null){
+		//GET LOGIN TOKEN
+		 require_once(ROOT .DS. "Vendor" . DS  . "Users" . DS . "Users.php");		
+		 $Users = new Users;
+		 
+		 $user_token = $Users->login_token($user_id);
+		//-----------------------------------------
+		}
+
+		if($token!=null){
+
+			if(strcmp((string)$token,(string)$user_token)!=0){
+				$response['msg']='Unauthorized access. Please login to get details.';
+				$response['response_code']='0';			
+				echo json_encode($response);
+				die;
+
+			}
+		}
 
 		if(is_array($this->request->session()->read('CART_INFO.CART'))){
 
@@ -99,8 +120,18 @@ class CartsController extends AppController
 		$session = $this->request->session();
 		$current_user = $this->request->session()->read('Current_User');
 		
+		if($token!=null){
+		//GET CURRENT USER IF TOKEN IS SET.
+				 $current_user = $Users->getCurrentUser($user_id);
+		//--------------------------------------------------
+		}
+		
 		if(!is_null($current_user)){
-			 $user_id = $current_user[0]['id'];
+
+			if(!empty(@$current_user[0]['id'])){
+				$user_id = $current_user[0]['id'];
+			}
+
 			//Save CART to DB...
 			//ADD CART DETAILS TO DB...
 			 require_once(ROOT .DS. "Vendor" . DS  . "Carts" . DS . "Carts.php");	
@@ -214,14 +245,51 @@ class CartsController extends AppController
 		exit;
 	}
     
-    public function cartDetails()
+    public function cartDetails($token=null,$user_id=null)
     {
 		header('Content-Type: application/json');
 		header('Access-Control-Allow-Origin: *');	
+
+		if($user_id!=null){
+
+			// GET USER TOKEN
+			require_once(ROOT .DS. "Vendor" . DS  . "Users" . DS . "Users.php");		
+			$Users = new Users;
+			$user_token = $Users->login_token($user_id);
+
+			//------------------------------------------
+
+		}
+
+		
+
+		//echo strcmp((string)$token,(string)$user_token);
 		
 		//CHECK LOGIN DETAILS.....
 			$session = $this->request->session();
-			$current_user = $this->request->session()->read('Current_User');		
+			$current_user = $this->request->session()->read('Current_User');
+
+
+			if($token!=null){
+
+				if(strcmp((string)$token,(string)$user_token)!=0){
+					$response['msg']='Unauthorized access. Please login to get details.';
+					$response['response_code']='0';			
+					echo json_encode($response);
+					die;
+			
+				}
+
+				//GET CURRENT USER IF TOKEN IS SET.
+				 $current_user = $Users->getCurrentUser($user_id);
+				//--------------------------------------------------
+
+			
+
+
+				//pre($current_user);
+
+			}
 
 			require_once(ROOT .DS. "Vendor" . DS  . "Promotions" . DS . "Promotions.php");		
 			$Promotions = new Promotions;
@@ -234,12 +302,15 @@ class CartsController extends AppController
 			$cartDetails = $this->request->session()->read('CART_INFO');
 			
 			
-
+		
 			if(empty($cartDetails['CART']['Product'])){
 			
 				//CHECK IF USER LOGGED IN
 
+				
+
 				if(!is_null($current_user)){
+
 					$user_id = $current_user[0]['id'];
 					
 					//GET CART FROM USERDATABASE
@@ -264,7 +335,7 @@ class CartsController extends AppController
 				
 					$Carts->cartUpdateFromSession();
 
-					//CHECK IF USER ADDED CART
+					//CHECK IF USER ADDED CART........
 
 
 
@@ -413,20 +484,36 @@ class CartsController extends AppController
 // Method to fetch all details for checkout Front-End page
 //************************************************
 	
-	public function detailsToCart(){
+	public function detailsToCart($token=null,$user_id=null){
 		
-		//header('Content-Type: application/json');
-		//header('Access-Control-Allow-Origin: *'); 
+		header('Content-Type: application/json');
+		header('Access-Control-Allow-Origin: *'); 
 
-		$session = $this->request->session();
-		$current_user = $this->request->session()->read('Current_User');		
+	
+		//GET LOGIN TOKEN
+		 require_once(ROOT .DS. "Vendor" . DS  . "Users" . DS . "Users.php");		
+		 $Users = new Users;
+		 $user_token = $Users->login_token($user_id);
+		//-----------------------------------------
+		
+if(strcmp((string)$token,(string)$user_token)!=0){
+$response['msg']='Unauthorized access. Please login to get details.';
+$response['response_code']='0';			
+echo json_encode($response);
+die;
+
+}else{		
+	
+
+
+	
 
 		$Configrations = TableRegistry::get('Configrations');
 		$Configration = $Configrations->get(1);
 		
 		$Carts = TableRegistry::get('Carts');
 		$cartDetails = $Carts->find('all',[
-		'conditions'=>['Carts.user_id'=>$current_user[0]['id']],
+		'conditions'=>['Carts.user_id'=>$user_id],
 		'contain' => ['CartProducts.Products.ProductsAttrs.Brands','CartProducts.Products.ProductsPrices','CartProducts.Products.ProductsMarketingImages' , 'Users.UserDetails', 'CartProducts.Products.Promotions']
 		]);
 		$cartDetail = $cartDetails->first();
@@ -436,7 +523,7 @@ class CartsController extends AppController
 
 		if($cartDetail==null){
 			
-		$cartDetail['user']['PuschaseLimits']='Purchase S$'.$Configration->min_amt_free_delivery.' more to get free delivery';	
+		$cartDetail['user']['PuschaseLimits']='Purchase111 S$'.$Configration->min_amt_free_delivery.' more to get free delivery';	
 		$cartDetail['user']['totalCartItems']=0;	
 		echo json_encode($cartDetail);
 		exit;
@@ -543,7 +630,7 @@ goto emptyPromo;
 		exit;	
 	}
 
-
+	}
 	
 	
 //************************************************

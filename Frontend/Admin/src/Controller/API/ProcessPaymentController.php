@@ -7,6 +7,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Carts\Carts;
 use Promotions\Promotions;
+use Users\Users;
 /**
  * Process Payment Controller
  *
@@ -17,7 +18,7 @@ class ProcessPaymentController extends AppController
 	
 	public function beforeFilter(Event $event)
     {      
-		$this->Auth->allow(['detailsToCart']);
+		$this->Auth->allow(['dopayment']);
     }
 
 	public function initialize()
@@ -39,20 +40,34 @@ class ProcessPaymentController extends AppController
 // Method to fetch all details for checkout Front-End page
 //************************************************
 	
-	public function detailsToCart(){
+	public function dopayment($token=null,$user_id=null){
 		
-		//header('Content-Type: application/json');
-		//header('Access-Control-Allow-Origin: *'); 
+		header('Content-Type: application/json');
+		header('Access-Control-Allow-Origin: *'); 
 
 		$session = $this->request->session();
 		$current_user = $this->request->session()->read('Current_User');		
+
+		//GET LOGIN TOKEN
+		 require_once(ROOT .DS. "Vendor" . DS  . "Users" . DS . "Users.php");		
+		 $Users = new Users;
+		 $user_token = $Users->login_token($user_id);
+		//-----------------------------------------
+		
+if(strcmp((string)$token,(string)$user_token)!=0){
+$response['msg']='Unauthorized access. Please login to get details.';
+$response['response_code']='0';			
+echo json_encode($response);
+die;
+
+}else{	
 
 		$Configrations = TableRegistry::get('Configrations');
 		$Configration = $Configrations->get(1);
 		
 		$Carts = TableRegistry::get('Carts');
 		$cartDetails = $Carts->find('all',[
-		'conditions'=>['Carts.user_id'=>$current_user[0]['id']],
+		'conditions'=>['Carts.user_id'=>$user_id],
 		'contain' => ['CartProducts.Products.ProductsAttrs.Brands','CartProducts.Products.ProductsPrices','CartProducts.Products.ProductsMarketingImages' , 'Users.UserDetails', 'CartProducts.Products.Promotions']
 		]);
 		$cartDetail = $cartDetails->first();
@@ -181,12 +196,12 @@ goto emptyPromo;
 				break;
 			}
 		
-		
+			$this->redirect( $ordersDetails );
 		
 		echo json_encode($cartDetail);
 		exit;	
 	}
-
+}
 
 	
 	
@@ -486,26 +501,43 @@ goto emptyPromo;
 	public function paypal($details){
 		$paypal_url='https://www.sandbox.paypal.com/cgi-bin/webscr'; // Test Paypal API URL
 		$paypal_id='mukesh.kaushal@sdnainfotech.com'; // Business email ID
+		$image=Router::url('/', true).'webroot/img/files/Configrations/logo/'.LOGO;
+		
+		
+		
 		
 		$details=[
-		"paypal_url"=>$paypal_url,
 		"business"=>$paypal_id ,
 		"cmd"=>"_xclick",
-		"item_name"=>"PHPGang Payment",
-		"item_number"=>"1",
+		"item_name"=>"Tables",
+		"item_name"=>"Tables2",
+		"item_number"=>"PIDD1",
 		"credits"=>"510",
 		"userid"=>"1",
 		"amount"=>"10",
-		"cpp_header_image"=>"http=>//www.phpgang.com/wp-content/uploads/gang.jpg",
-		"no_shipping"=>"1",
+		"cpp_header_image"=> $image,
+		"no_shipping"=>"5",
 		"currency_code"=>"SGD",
 		"handling"=>"0",
-		"cancel_return"=>"http=>//demo.phpgang.com/payment_with_paypal/cancel.php",
-		"return"=>"http=>//demo.phpgang.com/payment_with_paypal/success.php"
+		"cancel_return"=>"http://localhost/payment_with_paypal/cancel.php",
+		"return"=>"http://localhost.com/payment_with_paypal/success.php"
 		];
-		
-		debug($details);
-		die('paypal');
+
+
+	   // add html form
+
+        $html = '<form id="paypal" action="' . $paypal_url. '" method="post"  >';
+        foreach ($details as $name => $value) {
+            $html.= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
+        }
+        $html.= '<input type="submit"/>';
+        $html.= '</form>';
+
+		//echo $html;
+	
+	
+		echo json_encode($html);
+		die;
 	}
 
 	public function enets(){

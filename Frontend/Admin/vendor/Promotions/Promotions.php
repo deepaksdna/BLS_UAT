@@ -824,6 +824,11 @@ class Promotions
 		//	$promotionProducts['APPLIED_PROMOTIONS']['BEST_DISCOUNT_AMT_WITH_GST']=min($cost_price_with_gst);
 		//	$promotionProducts['OVERLAY_IMAGE']['DISPLAY']=max($overlay_display_amount);
 
+
+			if(!empty($promotionProducts['OVERLAY_IMAGE']['DISPLAY_TEXT'])){
+					$promotionProducts['OVERLAY_IMAGE']['DISPLAY'] = $promotionProducts['OVERLAY_IMAGE']['DISPLAY_TEXT'];
+			}
+
 		}else{
 
 

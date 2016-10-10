@@ -37,8 +37,7 @@ class LoginsController extends AppController
      * @return \Cake\Network\Response|null
      */
 	public function index() {
-
-			
+		
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 				if ($user) {

@@ -33,6 +33,17 @@ class Users
 	
 	}
 
+
+	public function getCurrentUser($uid){
+		$connection = ConnectionManager::get('default');
+		$sqlQryU='SELECT * FROM `users` WHERE users.id='.$uid;			
+		$getUsers = @$connection->execute($sqlQryU)->fetchAll('assoc');	
+
+		//$user_token = md5($getUsers['email'].$getUsers['id'].$getUsers['status'].'abc@xyz');
+		return $getUsers;
+	
+	}
+
    
 
 	

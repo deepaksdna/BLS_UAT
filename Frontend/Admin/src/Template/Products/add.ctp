@@ -150,58 +150,58 @@
 					
 		<!--Other-->
 					<div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Model<span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Model
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-						<?php echo $this->Form->input('products_attr.model', ['required'=> true, 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
+						<?php echo $this->Form->input('products_attr.model', [ 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
                       </div>
                     </div>
 					
 					<div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Video link<span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Video link <small style="color:red">http://</small>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-						<?php echo $this->Form->input('products_attr.video_link', ['required'=> true, 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
+						<?php echo $this->Form->input('products_attr.video_link', [ 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
                       </div>
                     </div>
 					
 					<div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Size<span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Size
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-						<?php echo $this->Form->input('products_attr.size', ['required'=> true, 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
+						<?php echo $this->Form->input('products_attr.size', [ 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
                       </div>
                     </div>
 					
 					<div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Weight<span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Weight
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-						<?php echo $this->Form->input('products_attr.weight', ['required'=> true, 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
+						<?php echo $this->Form->input('products_attr.weight', [ 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
                       </div>
                     </div>
 					
 					<div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Packaging<span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Packaging
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-						<?php echo $this->Form->input('products_attr.packaging', ['required'=> true, 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
+						<?php echo $this->Form->input('products_attr.packaging', [ 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
                       </div>
                     </div>
 					
 					<div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">UOM<span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">UOM
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-						<?php echo $this->Form->input('products_attr.uom', ['required'=> true, 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
+						<?php echo $this->Form->input('products_attr.uom', [ 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
                       </div>
                     </div>
 					
 					<div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Quantity<span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Quantity
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-						<?php echo $this->Form->input('products_attr.quantity', ['required'=> true, 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
+						<?php echo $this->Form->input('products_attr.quantity', [ 'label' => false, 'class'=>'form-control col-md-7 col-xs-12']); ?>
                       </div>
                     </div>
         </div>

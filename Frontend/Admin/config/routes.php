@@ -44,6 +44,12 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 
 
+Router::scope('/FrontEnd', function ($routes) {
+	//Router::mapResources('Products');
+	Router::extensions(['json']);
+	
+});
+
 Router::scope('/API', function ($routes) {
 	//Router::mapResources('Products');
 	Router::extensions(['json']);
@@ -56,9 +62,9 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */	
-	
+	Router::connect('/FrontEnd/:controller/:action/*', ['prefix'=> 'FrontEnd']);
 	Router::connect('/API/:controller/:action/*', ['prefix'=> 'API']);
-    $routes->connect('/', ['controller' => 'Logins', 'action' => 'index', 'login']);
+    $routes->connect('/', ['controller' => 'Logins', 'action' => 'index', 'index']);
 	$routes->extensions(['json']);
 	
 

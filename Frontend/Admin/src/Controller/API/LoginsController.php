@@ -16,7 +16,7 @@ class LoginsController extends AppController
 {
 	public function beforeFilter(Event $event)
     {      
-		$this->Auth->allow(['login','forgot','allcategories','getuseraccess','getuseraccess2','logintest']);
+		$this->Auth->allow(['login','forgot','allcategories','getuseraccess','getuseraccess2','logintest','getReadsession','destroySession']);
     }
 	
 
@@ -195,7 +195,7 @@ class LoginsController extends AppController
 					$reset_link = Router::url('/', true).FORGOT_PAGE_LINK.'?token='.$token_new;
 
 					//$reset_link = 'http://localhost:62614/index.html#/setpassword'.'?token='.$token_new;	
-					$reset_link = 'http://58.185.95.114:8282/Frontend/index.html#/setpassword'.'?token='.$token_new;	
+					$reset_link = 'http://112.196.17.77:81/bls/index.html#/setpassword'.'?token='.$token_new;	
 					//$reset_link = 'http://www.nanoappstore.com:8282/index.html#/setpassword'.'?token='.$token_new;
 							//$email = new Email('mailjet');
 							$email = new Email();
@@ -253,15 +253,49 @@ class LoginsController extends AppController
 
 		header('Content-Type: application/json');
 		header('Access-Control-Allow-Origin: *');  
-		$admin = TableRegistry::get('Categories');
-		$admis = $admin->find('all');
+		//header('Access-Control-Allow-Credentials: true');
+		
 		$session = $this->request->session();
+
+		$session->write('Current_User','Value session set'); 
 		$getUsers = $this->request->session()->read('Current_User');
-		print_r($getUsers);		
-		//echo json_encode($admis);
-		die;
+			
+		//var_dump($getUsers);
+		$mesg['msg']=$getUsers;
+		$mesg['response_code']='1';
+		echo json_encode($mesg);die;
 
 	}
+
+
+	public function getReadsession(){
+
+		header('Content-Type: application/json');
+		header('Access-Control-Allow-Origin: *');  
+		//header('Access-Control-Allow-Credentials: true');	
+				
+		$getUsers = $this->request->session()->read('Current_User');
+			
+		//var_dump($getUsers);
+		$mesg['msg']=$getUsers;
+		$mesg['response_code']='Session maintain in other call';
+		echo json_encode($mesg);die;
+
+	}
+
+	public function destroySession(){
+		header('Content-Type: application/json');
+		header('Access-Control-Allow-Origin: *');
+
+		$session = $this->request->session();
+		$this->request->session()->destroy('Current_User');
+
+		$mesg['msg']='Successfully destroy session.';
+		$mesg['response_code']='1';
+		echo json_encode($mesg);die;
+	
+	}
+
 	
 	
 		

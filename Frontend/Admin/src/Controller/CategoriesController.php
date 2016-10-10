@@ -115,18 +115,19 @@ class CategoriesController extends AppController
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
-    {
+    { 
         $category = $this->Categories->get($id, [
             'contain' => ['CategoryDetails']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+			
             $category = $this->Categories->patchEntity($category, $this->request->data,[
-							'associated' => [
-								'CategoryDetails.image',
-								'CategoryDetails.image_dir'
+							'associated' => ['CategoryDetails'
+								/* 'CategoryDetails.image',
+								'CategoryDetails.image_dir' */
 								]
 							
-					]);
+					]);		
             if ($this->Categories->save($category)) {
                 $this->Flash->success(__('The category has been saved.'));
                 return $this->redirect(['action' => 'index']);

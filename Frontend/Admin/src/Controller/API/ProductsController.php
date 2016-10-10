@@ -1198,6 +1198,7 @@ class ProductsController extends AppController
 				Product.product_desc as PRODUCT_DESC,
 				Product.created as PRODUCT_CREATED,
 				ProductsAttr.brand_id as PRODUCT_BRANDID,
+				BRANDS.name as BRAND_NAME,
 				ProductsAttr.model as PRODUCT_MODEL,
 				ProductsAttr.video_link as PRODUCT_VIDEOLINK,
 				ProductsAttr.size as PRODUCT_SIZE,
@@ -1218,8 +1219,11 @@ class ProductsController extends AppController
 				LEFT JOIN products_marketing_images as ProductsMarketingImages ON (ProductsMarketingImages.product_id=Product.id)
 				LEFT JOIN products_prices as ProductsPrices ON (ProductsPrices.product_id=Product.id)
 				LEFT JOIN products_categories as ProductsCategory ON (ProductsCategory.product_id=Product.id)
+				LEFT JOIN brands as BRANDS ON (brands.id=ProductsAttr.brand_id)
 			WHERE Product.id=".$productId." GROUP By Product.id
 		";
+
+		
 
 		//CALCULATED PROMOCODE .......			
 			require_once(ROOT .DS. "Vendor" . DS  . "Promotions" . DS . "Promotions.php");		
@@ -1235,9 +1239,14 @@ class ProductsController extends AppController
 		
 		$products['PRODUCT_DETAILS'] = $connection->execute($sql)->fetchAll('assoc');
 
-		
-
+	
 		$mainProductId = $products['PRODUCT_DETAILS'][0]['PRODUCT_ID'];
+
+
+
+		$products['PRODUCT_DETAILS'] = $products['PRODUCT_DETAILS'][0];
+
+
 
 		//GET OUT VAR INFO START
 
@@ -1259,7 +1268,7 @@ class ProductsController extends AppController
 		name as BRAND_NAME,
 		IF(image ='', 'empty-product-img.png',image) as image,
 		templates as TEMPLATES		
-		FROM `brands` WHERE id=".$products['PRODUCT_DETAILS'][0]['PRODUCT_BRANDID'];
+		FROM `brands` WHERE id=".$products['PRODUCT_DETAILS']['PRODUCT_BRANDID'];
 
 		$products['PRODUCT_BRAND_DETAILS'] = $connection->execute($sqlBrandQry)->fetchAll('assoc')[0];		
 		$products['PRODUCT_BRAND_IMAGE_URL']=Router::url('/', true).IMG_PATH_BRANDS.$products['PRODUCT_BRAND_DETAILS']['image'];
@@ -1277,7 +1286,7 @@ class ProductsController extends AppController
 			 die();
 		}
 		
-		$categoryId = $products['PRODUCT_DETAILS'][0]['category_id'];
+		$categoryId = $products['PRODUCT_DETAILS']['category_id'];
 	
 		$products['PRODUCTMARKETING_IMAGE_PATH'] = Router::url('/', true).$this->imagePath;	
 

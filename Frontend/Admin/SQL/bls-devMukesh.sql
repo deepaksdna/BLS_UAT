@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2016 at 08:54 AM
+-- Generation Time: Oct 07, 2016 at 02:12 PM
 -- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.21
+-- PHP Version: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bls_mukesh`
+-- Database: `bls-dev`
 --
 
 -- --------------------------------------------------------
@@ -285,7 +285,7 @@ CREATE TABLE `admins` (
 
 INSERT INTO `admins` (`id`, `email`, `password`, `group_id`, `image`, `image_dir`, `dob`, `mobile`, `firstname`, `lastname`, `created`, `modified`) VALUES
 (24, 'mukesh.kaushal@sdnainfotech.com', '$2y$10$bKtQgpy57TvVevDUGhgDPuguGlOOSUrFUNQ.joI8yVYYvk6ZnM2cu', 1, 'client-3.jpg', 'webroot\\img\\files\\Admins\\image\\', '2016-08-08', '9041160473', 'Mukesh', 'kaushal', '2016-08-17 09:35:37', '2016-08-17 13:09:14'),
-(25, 'himani.arora@sdnainfotech.com', '$2y$10$6476QRWdKmSjycaYpR2GK.b7FpzootkQc8CB1oIcsvxlwCEnpecjG', 2, '', 'webroot\\img\\files\\Admins\\image\\', '2016-08-02', '2342334234', 'Himani', 'arora', '2016-08-17 09:36:09', '2016-09-22 11:57:30'),
+(25, 'himani.arora@sdnainfotech.com', '$2y$10$6476QRWdKmSjycaYpR2GK.b7FpzootkQc8CB1oIcsvxlwCEnpecjG', 2, 'Chrysanthemum.jpg', 'webroot\\img\\files\\Admins\\image\\', '2016-08-02', '2342334234', 'Himani', 'arora', '2016-08-17 09:36:09', '2016-09-27 07:40:48'),
 (26, 'pradeep.danwal@sdnainfotech.com', '$2y$10$MtFvHnhcvkg9SFddGsr01uXkvKJoTTDHwQHTtAq.0q3o2BkpllDj2', 3, 'Penguins.jpg', 'webroot\\img\\files\\Admins\\image\\', '2016-08-08', '9041160473', 'Pradeep', 'dangwal', '2016-08-17 09:36:52', '2016-08-17 09:36:52');
 
 -- --------------------------------------------------------
@@ -386,10 +386,9 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `name`, `image`, `image_dir`, `templates`, `status`, `created`, `modified`) VALUES
-(1, 'Dell', 'Demo-Logo.jpg', 'webroot\\img\\files\\Brands\\image\\', '1', '1', '2016-09-22 07:41:30', '2016-09-27 10:18:23'),
-(2, 'Faber', 'Branding1.png', 'webroot\\img\\files\\Brands\\image\\', '2', '1', '2016-09-27 08:35:03', '2016-09-27 10:18:31'),
-(3, 'Pelikan', 'yougov-brandindex-logo.jpg', 'webroot\\img\\files\\Brands\\image\\', '3', '1', '2016-09-27 08:35:48', '2016-09-27 10:18:38'),
-(4, 'Scwan', 'youtube-hed-2016_0.png', 'webroot\\img\\files\\Brands\\image\\', '1', '1', '2016-09-27 08:36:57', '2016-09-27 10:18:48');
+(1, 'Dell', 'Demo-Logo.jpg', 'webroot\\img\\files\\Brands\\image\\', '3', '1', '2016-09-22 07:41:30', '2016-09-27 09:29:41'),
+(2, 'HP', 'unicorn-02.jpg', 'webroot\\img\\files\\Brands\\image\\', '3', '1', '2016-09-27 09:35:29', '2016-09-27 09:41:23'),
+(3, 'HP', 'Exacompta.jpg', 'webroot\\img\\files\\Brands\\image\\', '2', '1', '2016-10-05 13:09:40', '2016-10-05 13:09:40');
 
 -- --------------------------------------------------------
 
@@ -404,13 +403,6 @@ CREATE TABLE `carts` (
   `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `user_id`, `created`, `modified`) VALUES
-(1, 9, '2016-09-22 00:00:00', '2016-09-22 17:38:44');
-
 -- --------------------------------------------------------
 
 --
@@ -422,21 +414,9 @@ CREATE TABLE `cart_products` (
   `cart_id` int(11) NOT NULL,
   `prod_id` int(11) NOT NULL,
   `prod_quantity` int(11) NOT NULL,
-  `promotion_code` int(255) NOT NULL,
-  `final_item_price` varchar(255) NOT NULL,
-  `discount_rate` varchar(255) NOT NULL,
-  `final_price` varchar(255) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `cart_products`
---
-
-INSERT INTO `cart_products` (`id`, `cart_id`, `prod_id`, `prod_quantity`, `promotion_code`, `final_item_price`, `discount_rate`, `final_price`, `created`, `modified`) VALUES
-(1, 1, 1, 10, 1, '100', '0', '1000', '2016-09-21 00:00:00', '2016-09-26 01:14:22'),
-(2, 1, 2, 3, 0, '100', '20', '280', '2016-09-20 00:00:00', '2016-09-26 01:14:22');
 
 -- --------------------------------------------------------
 
@@ -459,19 +439,16 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `parent_id`, `lft`, `rght`, `name`, `created`, `modified`) VALUES
-(1, NULL, 11, 60, 'Main Category', '2016-08-09 12:50:58', '2016-08-09 07:34:52'),
-(2, 1, 11, 60, 'Desktop Stationery', '2016-08-09 12:50:58', '2016-10-03 05:35:56'),
-(3, 1, 11, 60, 'Filing Products', '2016-08-09 12:50:58', '2016-10-03 05:36:40'),
-(4, 1, 11, 60, 'Packing Supplies', '2016-08-09 12:50:58', '2016-10-03 05:37:44'),
-(5, 1, 11, 60, 'Office Equipments', '2016-08-09 12:50:58', '2016-10-03 05:38:35'),
-(6, 1, 11, 60, 'Paper Products', '2016-08-09 12:50:58', '2016-10-03 05:40:56'),
-(7, 1, 11, 60, 'Ink & Toner', '2016-08-09 12:50:58', '2016-10-03 05:40:09'),
-(10, 3, 48, 49, 'Tables', '2016-09-22 06:31:02', '2016-09-23 04:34:16'),
-(11, 7, 56, 57, 'Hardware & Pantry Supplies', '2016-09-23 04:32:08', '2016-10-03 05:41:41'),
-(12, 7, 58, 59, 'Food & Beverage', '2016-09-23 04:32:53', '2016-10-03 05:42:38'),
-(13, 2, 50, 51, 'Letter Trayers & Drawers', '2016-09-27 07:51:28', '2016-09-27 08:15:06'),
-(14, 2, 52, 53, 'Badge Reel', '2016-09-27 08:23:31', '2016-09-27 08:23:31'),
-(15, 2, 54, 55, 'test', '2016-09-27 09:26:26', '2016-09-27 09:26:26');
+(1, NULL, 11, 54, 'Main Category', '2016-08-09 12:50:58', '2016-08-09 07:34:52'),
+(2, 1, 11, 54, 'Desktop Stationery', '2016-08-09 12:50:58', '2016-09-23 04:25:21'),
+(3, 1, 11, 54, 'Filing Products', '2016-08-09 12:50:58', '2016-09-23 04:29:14'),
+(4, 1, 11, 54, 'Packing Supplies', '2016-08-09 12:50:58', '2016-09-23 04:29:48'),
+(5, 1, 11, 54, 'Office Equipments', '2016-08-09 12:50:58', '2016-09-23 04:30:13'),
+(6, 1, 11, 54, 'Paper Products', '2016-08-09 12:50:58', '2016-09-23 04:30:44'),
+(7, 1, 11, 54, 'Ink & Toner', '2016-08-09 12:50:58', '2016-09-23 04:31:33'),
+(10, 3, 48, 49, 'Tables', '2016-09-22 06:31:02', '2016-10-07 04:45:07'),
+(11, 1, 50, 51, 'Hardware & Pantry Supplies', '2016-09-23 04:32:08', '2016-09-23 04:32:08'),
+(12, 1, 52, 53, 'Food & Beverage', '2016-09-23 04:32:53', '2016-09-23 04:32:53');
 
 -- --------------------------------------------------------
 
@@ -493,18 +470,15 @@ CREATE TABLE `category_details` (
 --
 
 INSERT INTO `category_details` (`id`, `category_id`, `image`, `image_dir`, `created`, `modified`) VALUES
-(1, 2, 'desktop.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-07-25 09:42:21', '2016-10-03 05:35:56'),
-(2, 3, 'filling-accessories.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-07-25 09:42:33', '2016-10-03 05:36:40'),
-(3, 4, 'paper.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-08-09 07:30:58', '2016-10-03 05:37:44'),
-(4, 5, 'office.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-08-09 07:31:50', '2016-10-03 05:38:35'),
-(5, 6, 'writing.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-08-09 07:32:30', '2016-10-03 05:40:56'),
-(6, 7, 'DISPLAY.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-08-09 07:33:36', '2016-10-03 05:40:09'),
-(9, 10, 'product-template-banner.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-09-22 06:31:02', '2016-09-23 04:34:16'),
-(10, 11, 'paper.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-09-23 04:32:08', '2016-10-03 05:41:41'),
-(11, 12, 'DISPLAY.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-09-23 04:32:53', '2016-10-03 05:42:38'),
-(12, 13, 'hardware-pantry-supplies.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-09-27 07:51:28', '2016-09-27 08:15:06'),
-(13, 14, '', '', '2016-09-27 08:23:31', '2016-09-27 08:23:31'),
-(14, 15, 'NoCategoryImage.png', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-09-27 09:26:26', '2016-09-27 09:26:26');
+(1, 2, 'desktop-stationery.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-07-25 09:42:21', '2016-09-23 04:25:21'),
+(2, 3, 'filing-products.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-07-25 09:42:33', '2016-09-23 04:29:14'),
+(3, 4, 'packing-supplies.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-08-09 07:30:58', '2016-09-23 04:29:48'),
+(4, 5, 'office-equipments.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-08-09 07:31:50', '2016-09-23 04:30:13'),
+(5, 6, 'paper-products.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-08-09 07:32:30', '2016-09-23 04:30:44'),
+(6, 7, 'ink-toner.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-08-09 07:33:36', '2016-09-23 04:31:33'),
+(9, 10, 'product-template-banner.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-09-22 06:31:02', '2016-10-07 04:45:07'),
+(10, 11, 'hardware-pantry-supplies.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-09-23 04:32:08', '2016-09-23 04:32:08'),
+(11, 12, 'food-beverage.jpg', 'webroot\\img\\files\\CategoryDetails\\image\\', '2016-09-23 04:32:53', '2016-09-23 04:32:53');
 
 -- --------------------------------------------------------
 
@@ -577,7 +551,7 @@ CREATE TABLE `configrations` (
 --
 
 INSERT INTO `configrations` (`id`, `store_name`, `logo`, `logo_dir`, `title`, `facebook_link`, `twitter_link`, `currency`, `gst`, `delivery_charge`, `min_amt_free_delivery`, `adm_fdbk_email`, `min_amt_for_promotion`, `invoice_msg`, `promo_page_1`, `promo_page_2`, `promo_page_3`, `created`, `modified`) VALUES
-(1, 'Boon Lay Stationary', 'favicon.jpg', 'webroot\\img\\files\\Configrations\\logo\\', 'BLS | Ecommerce', 'https://facebook.com/bls', 'https://twitter.com/bls', 'SGD', '7', '500', '60', 'kalpna@sdnainfotech.com', '100', 'You got this promotion.', 'value plus', 'solo plus', 'pwp', '2016-07-18 06:44:20', '2016-09-28 11:00:05');
+(1, 'Boon Lay Stationary', 'favicon.jpg', 'webroot\\img\\files\\Configrations\\logo\\', 'BLS | Ecommerce', 'https://facebook.com/bls', 'https://twitter.com/bls', 'SGD', '7', '400', '10000', 'admin@bls.com', '100', 'You got this promotion.', 'value plus', 'solo plus', 'pwp', '2016-07-18 06:44:20', '2016-10-04 12:03:09');
 
 -- --------------------------------------------------------
 
@@ -642,7 +616,7 @@ CREATE TABLE `logs` (
 --
 
 INSERT INTO `logs` (`id`, `errors`, `modified_by`, `modified`) VALUES
-(1, ' Record no.1: Updated</br> Record no.2: Updated</br> Record no.3: Color "green" not found Record no.3: Updated</br> Record no.4: Updated</br>', 24, '2016-09-09 10:23:52'),
+(1, ' Record no.1: Added</br>', 24, '2016-10-04 05:49:53'),
 (2, 'Promotion - 1: Child Product it code :FI22MO7-311 not found, Promotion - 1: CASH010 not updated</br>', 24, '2016-09-03 07:05:41');
 
 -- --------------------------------------------------------
@@ -664,14 +638,6 @@ CREATE TABLE `orders` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `user_id`, `user_addresses_id`, `user_comments`, `admin_comments`, `transactionCode`, `refrenceCode`, `invoiceCode`, `otherCode`, `created`, `modified`) VALUES
-(1, 2, 1, 'dfg', 'fgdfg', 55, 656, 67676, 676756, '2016-07-19 00:00:00', '2016-07-28 17:28:11'),
-(2, 50, 3, 'dummy', 'dummy', 445, 45, 45, 45, '0000-00-00 00:00:00', '2016-08-05 18:38:38');
 
 -- --------------------------------------------------------
 
@@ -713,15 +679,6 @@ CREATE TABLE `orders_products` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `orders_products`
---
-
-INSERT INTO `orders_products` (`id`, `order_id`, `product_id`, `product_quantity`, `price`, `discounted_price`, `final_price`, `gst_rate`, `promotion_applied`, `created`, `modified`) VALUES
-(1, 1, 4, 5, '65', '54', '678', '', '', '2016-07-13 00:00:00', '2016-07-28 17:28:41'),
-(17, 1, 46, 0, '', '', '230', '', '', '2016-07-29 07:06:07', '2016-07-29 07:06:07'),
-(18, 2, 81, 2, '23', '12', '12', '', '', '0000-00-00 00:00:00', '2016-08-05 18:40:08');
 
 -- --------------------------------------------------------
 
@@ -829,16 +786,13 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `item_code`, `title`, `product_desc`, `created`, `modified`, `status`) VALUES
-(1, 'TA10DE1-1', 'First Product', 'First Product Description', '2016-09-22 07:41:52', '2016-09-27 13:16:55', 'N'),
-(2, 'TA10DE1-2', 'Second Product', 'Second Product Description', '2016-09-22 07:44:02', '2016-10-04 09:18:33', 'N'),
-(3, 'TA10DE1-3', 'dffgd', 'dfgfg', '2016-09-22 13:34:47', '2016-09-27 11:14:59', 'N'),
-(4, 'LE13DE1-4', 'MULTIFORM 3124071 Office Set La Linea', 'some description about A', '2016-09-27 07:57:14', '2016-10-03 13:26:55', 'N'),
-(5, 'LE13DE1-5', 'MULTIFORM 103438D 2-Tier Letter Tray', 'some details for products', '2016-09-27 08:03:30', '2016-10-03 13:27:13', 'N'),
-(6, 'LE13DE1-6', 'MULTIFORM 1130800 Letter Tray Combo 2', 'some details', '2016-09-27 08:05:48', '2016-09-29 13:17:51', 'N'),
-(7, 'LE13SC4-7', 'MULTIFORM 102244055 The Box Media', 'some detailed about products', '2016-09-27 08:42:50', '2016-09-27 08:42:50', 'N'),
-(8, 'LE13PE3-8', 'PRODUCT_NO_IMAGE', 'some details are here.', '2016-09-27 09:30:11', '2016-09-29 13:16:42', 'N'),
-(9, 'LE13FA2-9', 'LE13PE3-New brand', 'Test des', '2016-09-27 11:26:51', '2016-09-27 12:08:19', 'Y'),
-(10, 'BA14FA2-10', 'Notepad', 'some details are here.', '2016-09-27 11:40:16', '2016-09-27 11:42:34', 'N');
+(1, 'TA10DE1-1', 'First Product', 'First Product Description', '2016-09-22 07:41:52', '2016-09-28 11:38:12', 'N'),
+(2, 'TA10DE1-2', 'Second Product', 'Second Product Description', '2016-09-22 07:44:02', '2016-09-22 13:33:08', 'N'),
+(3, 'TA10DE1-3', 'dffgd', 'dfgfg', '2016-09-22 13:34:47', '2016-09-22 13:34:53', 'N'),
+(4, 'FI22M47-71', 'Fiber pencils', 'Twin Marker', '2016-10-04 05:49:53', '2016-10-04 05:53:04', 'N'),
+(5, 'TA10DE1-5', 'dsf fdsdf sd  sdfdf ds', 'fgg', '2016-10-06 07:02:46', '2016-10-06 07:02:46', 'N'),
+(6, 'TA10DE1-6', 'bvb', 'vcbb', '2016-10-06 07:04:47', '2016-10-06 07:04:47', 'N'),
+(7, 'TA10DE1-7', 'dfgf', 'dfgdgdgf', '2016-10-07 05:00:49', '2016-10-07 05:00:49', 'N');
 
 -- --------------------------------------------------------
 
@@ -869,16 +823,13 @@ CREATE TABLE `products_attrs` (
 --
 
 INSERT INTO `products_attrs` (`id`, `product_id`, `brand_id`, `model`, `video_link`, `size`, `weight`, `packaging`, `uom`, `quantity`, `main_promo_1`, `main_promo_2`, `main_promo_3`, `created`, `modified`) VALUES
-(1, 1, 1, 'GT11', 'fdffd/fghghg.com', '45', '78', '88', 'FG45', 4, '0', 'solo plus', '0', '2016-09-22 07:41:52', '2016-09-27 11:12:14'),
-(2, 2, 1, 'GT12', 'http://www.yahoo.com', '56', '88', '45', 'FG55', 4, '0', 'value plus', '0', '2016-09-22 07:44:02', '2016-10-04 09:18:33'),
-(3, 3, 1, 'dfgdf', 'dfgd', 'fgd', 'fgdg', 'dfg', 'df', 5, '0', 'pwp', '0', '2016-09-22 13:34:47', '2016-09-27 11:14:59'),
-(4, 4, 1, 'M9980', 'http://www.videolink.com', '70 pgs', '10lbs', '21', 'U009', 3, 'value plus', '0', '0', '2016-09-27 07:57:14', '2016-09-27 07:57:14'),
-(5, 5, 2, 'NT001', 'http://www.videolink.com', '23', '10lbs', '21', 'U009', 4, 'value plus', '0', '0', '2016-09-27 08:03:30', '2016-09-27 08:39:11'),
-(6, 6, 3, 'M9980', 'http://www.videolink.com', '70 pgs', '10lbs', '21', 'U009', 4, 'pwp', '0', '0', '2016-09-27 08:05:48', '2016-09-27 11:11:27'),
-(7, 7, 4, 'M0098', 'http://www.videolink.com', '70 pgs', '10lbs', '21', 'U009', 4, 'pwp', '0', '0', '2016-09-27 08:42:50', '2016-09-27 08:42:50'),
-(8, 8, 3, 'NT001', 'http://www.videolink.com', '70 pgs', '10lbs', '21', 'U009', 2, '0', '0', '0', '2016-09-27 09:30:11', '2016-09-27 09:30:11'),
-(9, 9, 2, 'LE13PE3-New', '', '34', '12', '23', '45', 3, '0', '0', '0', '2016-09-27 11:26:51', '2016-09-27 11:26:51'),
-(10, 10, 3, 'M-009', 'http://www.videolink.com', '12lbs', '12', '21', 'U009', 10, 'solo plus', '0', '0', '2016-09-27 11:40:16', '2016-09-27 11:42:34');
+(1, 1, 1, 'GT11', 'fdffd/fghghg.com', '45', '78', '88', 'FG45', 4, 'value plus', 'solo plus', '0', '2016-09-22 07:41:52', '2016-09-22 07:41:52'),
+(2, 2, 1, 'GT12', 'gggf/ghghg.cpm', '56', '88', '45', 'FG55', 4, 'solo plus', 'value plus', 'pwp', '2016-09-22 07:44:02', '2016-09-22 07:44:02'),
+(3, 3, 1, 'dfgdf', 'dfgd', 'fgd', 'fgdg', 'dfg', 'df', 5, 'value plus', 'solo plus', '0', '2016-09-22 13:34:47', '2016-09-22 13:34:47'),
+(4, 4, 1, 'SCATM1', 'youtube.com/ab', '56', '100', '45x43', 'EA', 1, 'value plus', '0', '0', '2016-10-04 05:49:53', '2016-10-04 05:49:53'),
+(5, 5, 1, 'fgg', 'fgffg', 'gdfgdgdfg', 'dfgdfgd', 'fgdfgdfgfg', 'dfgdfg', 43, 'value plus', '0', '0', '2016-10-06 07:02:46', '2016-10-06 07:02:46'),
+(6, 6, 1, 'vb', 'gfgfd.dcg/ggdfg', 'vbvbc', 'cbb', 'v', 'bv', 56, 'value plus', '0', '0', '2016-10-06 07:04:48', '2016-10-06 07:04:48'),
+(7, 7, 1, 'gfgdggfg', 'http://fgg.dfgg', '', '', '', 'fgd', 5, '0', '0', '0', '2016-10-07 05:00:49', '2016-10-07 05:00:49');
 
 -- --------------------------------------------------------
 
@@ -902,13 +853,10 @@ INSERT INTO `products_categories` (`id`, `category_id`, `product_id`, `created`,
 (1, 10, 1, '2016-09-22 07:41:52', '2016-09-22 07:41:52'),
 (2, 10, 2, '2016-09-22 07:44:02', '2016-09-22 07:44:02'),
 (3, 10, 3, '2016-09-22 13:34:47', '2016-09-22 13:34:47'),
-(4, 14, 4, '2016-09-27 07:57:14', '2016-10-03 13:26:55'),
-(5, 14, 5, '2016-09-27 08:03:30', '2016-10-03 13:27:13'),
-(6, 13, 6, '2016-09-27 08:05:48', '2016-09-27 08:05:48'),
-(7, 13, 7, '2016-09-27 08:42:50', '2016-09-27 08:42:50'),
-(8, 13, 8, '2016-09-27 09:30:11', '2016-09-27 09:30:11'),
-(9, 13, 9, '2016-09-27 11:26:51', '2016-09-27 11:26:51'),
-(10, 13, 10, '2016-09-27 11:40:16', '2016-09-27 11:41:03');
+(4, 10, 4, '2016-10-04 05:49:53', '2016-10-04 05:49:53'),
+(5, 10, 5, '2016-10-06 07:02:46', '2016-10-06 07:02:46'),
+(6, 10, 6, '2016-10-06 07:04:48', '2016-10-06 07:04:48'),
+(7, 10, 7, '2016-10-07 05:00:49', '2016-10-07 05:00:49');
 
 -- --------------------------------------------------------
 
@@ -936,13 +884,7 @@ INSERT INTO `products_images` (`id`, `product_id`, `product_code`, `image`, `ima
 (2, 2, 'TA10DE1-2CO4', 'Chrysanthemum.jpg', 'webroot\\img\\files\\ProductsImages\\image\\', 4, 1, '2016-09-22 07:44:02', '2016-09-22 07:44:02'),
 (3, 3, 'TA10DE1-3CH3', 'Chrysanthemum.jpg', 'webroot\\img\\files\\ProductsImages\\image\\', 3, 1, '2016-09-22 13:34:48', '2016-09-22 13:34:48'),
 (4, 1, 'TA10DE1-1FO6', 'prod3.jpg', 'webroot\\img\\files\\ProductsImages\\image\\', 6, 1, '2016-09-23 05:01:44', '2016-09-23 05:01:44'),
-(5, 4, 'LE13DE1-4AZ2', 'prod5.jpg', 'webroot\\img\\files\\ProductsImages\\image\\', 2, 1, '2016-09-27 07:57:14', '2016-09-27 07:57:14'),
-(6, 5, 'LE13DE1-5CH3', 'prod7.jpg', 'webroot\\img\\files\\ProductsImages\\image\\', 3, 1, '2016-09-27 08:03:30', '2016-09-27 08:03:30'),
-(7, 6, 'LE13DE1-6CR5', 'prod6.jpg', 'webroot\\img\\files\\ProductsImages\\image\\', 5, 1, '2016-09-27 08:05:48', '2016-09-27 08:05:48'),
-(8, 7, 'LE13SC4-7CO4', 'BLS_15-PromotionsValuesPlus.jpg', 'webroot\\img\\files\\ProductsImages\\image\\', 4, 1, '2016-09-27 08:42:50', '2016-09-27 08:42:50'),
-(9, 8, 'LE13PE3-8AZ2', '', '', 2, 1, '2016-09-27 09:30:11', '2016-09-27 09:30:11'),
-(10, 9, 'LE13FA2-9RO15', '', '', 15, 1, '2016-09-27 11:26:52', '2016-09-27 11:26:52'),
-(11, 10, 'BA14FA2-10CH3', 'american-express.jpg', 'webroot\\img\\files\\ProductsImages\\image\\', 3, 1, '2016-09-27 11:40:16', '2016-09-27 11:40:16');
+(5, 4, 'FI22MO7-6GR9', 'progreen.jpg', 'webroot\\img\\files\\ProductsImages\\image\\', 4, 0, '2016-10-04 05:49:53', '2016-10-04 05:49:53');
 
 -- --------------------------------------------------------
 
@@ -973,16 +915,13 @@ INSERT INTO `products_marketing_images` (`id`, `product_id`, `image`, `image_dir
 (12, 1, 'prod1.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-23 05:01:54'),
 (13, 1, 'prod2.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-23 05:03:15'),
 (14, 1, 'prod2b.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-23 05:03:24'),
-(15, 4, 'prod4.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-27 07:57:14'),
-(16, 5, 'prod5.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-27 08:03:30'),
-(17, 6, 'prod6.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-27 08:05:48'),
-(18, 7, 'prod3.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-27 08:42:50'),
-(19, 8, '', '', '2016-09-27 09:30:11'),
-(20, 9, 'prod6.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-27 11:26:51'),
-(21, 9, 'prod7.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-27 11:26:52'),
-(22, 10, 'mastercard.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-27 11:40:16'),
-(23, 10, 'nets.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-27 11:40:16'),
-(24, 10, 'nets-icon.png', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-09-27 11:40:16');
+(15, 4, 'facebook.png', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-10-04 05:49:53'),
+(16, 4, 'prod12.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-10-04 05:49:53'),
+(17, 4, 'prod13.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-10-04 05:49:53'),
+(18, 4, 'prod14.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-10-04 05:49:53'),
+(19, 5, 'prod5.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-10-06 07:02:46'),
+(20, 6, 'mastercard.jpg', 'webroot\\img\\files\\ProductsMarketingImages\\image\\', '2016-10-06 07:04:48'),
+(21, 7, '', '', '2016-10-07 05:00:49');
 
 -- --------------------------------------------------------
 
@@ -1003,16 +942,13 @@ CREATE TABLE `products_prices` (
 --
 
 INSERT INTO `products_prices` (`id`, `product_id`, `list_price`, `created`, `modified`) VALUES
-(1, 1, '100.00', '2016-09-22 07:41:52', '2016-09-22 07:41:52'),
+(1, 1, '50.00', '2016-09-22 07:41:52', '2016-09-28 11:38:12'),
 (2, 2, '200.00', '2016-09-22 07:44:02', '2016-09-22 07:44:02'),
 (3, 3, '67.00', '2016-09-22 13:34:47', '2016-09-22 13:34:47'),
-(4, 4, '125.00', '2016-09-27 07:57:14', '2016-09-29 13:18:37'),
-(5, 5, '64.00', '2016-09-27 08:03:30', '2016-09-29 13:17:18'),
-(6, 6, '10.00', '2016-09-27 08:05:48', '2016-09-29 13:17:51'),
-(7, 7, '80.00', '2016-09-27 08:42:50', '2016-09-27 08:42:50'),
-(8, 8, '124.00', '2016-09-27 09:30:11', '2016-09-29 13:16:42'),
-(9, 9, '250.00', '2016-09-27 11:26:51', '2016-09-27 11:26:51'),
-(10, 10, '134.00', '2016-09-27 11:40:16', '2016-09-27 11:40:16');
+(4, 4, '1.6', '2016-10-04 05:49:53', '2016-10-04 05:49:53'),
+(5, 5, '599.00', '2016-10-06 07:02:46', '2016-10-06 07:02:46'),
+(6, 6, '435.00', '2016-10-06 07:04:48', '2016-10-06 07:04:48'),
+(7, 7, '56.00', '2016-10-07 05:00:49', '2016-10-07 05:00:49');
 
 -- --------------------------------------------------------
 
@@ -1035,16 +971,13 @@ CREATE TABLE `products_relateds` (
 --
 
 INSERT INTO `products_relateds` (`id`, `product_id`, `related_product_1`, `related_product_2`, `related_product_3`, `created`, `modified`) VALUES
-(1, 1, '3', '4', '5', '2016-09-22 07:41:52', '2016-09-27 11:14:02'),
-(2, 2, '1', '0', '0', '2016-09-22 07:44:02', '2016-10-04 09:18:33'),
-(3, 3, '1', '0', '0', '2016-09-22 13:34:47', '2016-09-27 11:14:59'),
-(4, 4, '0', '0', '0', '2016-09-27 07:57:14', '2016-10-03 13:26:55'),
-(5, 5, '0', '0', '0', '2016-09-27 08:03:30', '2016-10-03 13:27:13'),
-(6, 6, '0', '0', '0', '2016-09-27 08:05:48', '2016-09-29 13:17:51'),
-(7, 7, '0', '0', '0', '2016-09-27 08:42:50', '2016-09-27 08:42:50'),
-(8, 8, '0', '0', '0', '2016-09-27 09:30:11', '2016-09-29 13:16:42'),
-(9, 9, '0', '0', '0', '2016-09-27 11:26:51', '2016-09-27 11:26:51'),
-(10, 10, '0', '0', '0', '2016-09-27 11:40:16', '2016-09-27 11:42:34');
+(1, 1, '0', '0', '0', '2016-09-22 07:41:52', '2016-09-28 11:38:12'),
+(2, 2, '1', '0', '0', '2016-09-22 07:44:02', '2016-09-22 07:44:02'),
+(3, 3, '1', '0', '0', '2016-09-22 13:34:47', '2016-09-22 13:34:47'),
+(4, 4, '3', '0', '0', '2016-10-04 05:49:53', '2016-10-04 05:53:04'),
+(5, 5, '0', '0', '0', '2016-10-06 07:02:46', '2016-10-06 07:02:46'),
+(6, 6, '0', '0', '0', '2016-10-06 07:04:48', '2016-10-06 07:04:48'),
+(7, 7, '0', '0', '0', '2016-10-07 05:00:49', '2016-10-07 05:00:49');
 
 -- --------------------------------------------------------
 
@@ -1077,12 +1010,9 @@ CREATE TABLE `promotions` (
 --
 
 INSERT INTO `promotions` (`id`, `promo_code`, `formal_message_display`, `product_id`, `discounted_amount_parent`, `quantity_parent`, `start_date`, `end_date`, `associated_product`, `child_product_id`, `discounted_amount_child`, `quantity_child`, `discount_parent_in`, `discount_child_in`, `discount_type`, `created`, `modified`) VALUES
-(1, 'CASH400', 'THIS is my promo', 1, '1', 1, '23-09-2016', '30-09-2016', '1', '1', '67', 56, '$', '$', 'P', '2016-09-23 05:47:47', '2016-09-26 05:20:14'),
-(2, 'CASH200', 'This is Second Promo', 1, '20', 1, '23-09-2016', '26-09-2016', '0', '1', '67', 67, '$', '$', 'B', '2016-09-23 05:50:30', '2016-09-26 04:40:40'),
-(3, 'PRO900001', 'Direct Discount on this product', 4, '10', 1, '27-09-2016', '31-10-2016', '1', '1', '0', 1, '%', '$', 'D', '2016-09-27 09:43:19', '2016-09-27 09:43:19'),
-(4, 'PRO900006', 'FOC', 6, '0', 1, '27-09-2016', '31-10-2016', '1', '8', '100', 1, '%', '$', 'F', '2016-09-27 09:43:19', '2016-09-27 09:43:19'),
-(5, 'PR008', 'Direct Discount', 10, '15', 1, '27-09-2016', '30-10-2016', '1', '1', '0', 0, '%', '$', 'D', '2016-09-27 11:44:14', '2016-09-27 11:44:14'),
-(7, 'PRO900003333', 'Direct Discount on this product', 3, '10', 1, '27-09-2016', '31-10-2016', '1', '1', '0', 1, '%', '$', 'D', '2016-09-27 09:43:19', '2016-09-27 09:43:19');
+(1, 'CASH400', 'THIS is my promo', 1, '10', 3, '23-09-2016', '12-10-2016', '0', '2', '60', 5, '%', '%', 'P', '2016-09-23 05:47:47', '2016-10-05 12:11:55'),
+(2, 'CASH200', 'This is Second Promo', 1, '11', 1, '29-09-2016', '06-10-2016', '0', '2', '30', 5, '$', '$', 'P', '2016-09-23 05:50:30', '2016-10-05 12:03:11'),
+(3, 'CSHA2000', 'fggdf g fgfg ', 1, '1', 10, '29-09-2016', '06-10-2016', '1', '1', '67', 4, '%', '$', 'B', '2016-09-29 12:06:07', '2016-10-04 06:13:16');
 
 -- --------------------------------------------------------
 
@@ -1127,13 +1057,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `status`, `password`, `created`, `modified`) VALUES
-(9, 'pradeep.danwal@sdnainfotech.com', '1', '827ccb0eea8a706c4c34a16891f84e7b', '2016-08-18 12:24:01', '2016-09-27 13:04:05'),
-(30, 'deepak.ra1982@sdnainfotech.com', '1', '123456', '2016-09-29 06:36:12', '2016-09-29 06:36:12'),
-(35, 'sflowaskgmail@sdnainfotech.com', '1', '123456', '2016-09-29 07:35:05', '2016-09-29 07:35:05'),
-(37, 'sania.mohan@sdnainfotech.com', '1', 'e10adc3949ba59abbe56e057f20f883e', '2016-10-03 09:52:19', '2016-10-03 09:52:19'),
-(47, 'deepak.rathi@sdnainfotech.com', '1', '827ccb0eea8a706c4c34a16891f84e7b', '2016-10-04 09:37:58', '2016-10-04 09:37:58'),
-(48, 'dfd55f@gmail.com', '1', 'e10adc3949ba59abbe56e057f20f883e', '2016-10-05 06:48:27', '2016-10-05 06:48:27'),
-(50, 'kalpna@sdnainfotech.com', '1', 'e10adc3949ba59abbe56e057f20f883e', '2016-10-05 12:51:17', '2016-10-05 12:51:17');
+(9, 'pradeep.danwal@sdnainfotech.com', '1', '202cb962ac59075b964b07152d234b70', '2016-08-18 12:24:01', '2016-09-27 09:43:41'),
+(10, 'himaniphp@sdnainfotech.com', '1', '202cb962ac59075b964b07152d234b70', '2016-09-06 05:07:47', '2016-09-06 05:50:05'),
+(11, 'himani.arora@sdnainfotech.com', '1', '0201837e933e65c782dde4461aef3839', '2016-09-06 05:57:40', '2016-09-06 05:57:40'),
+(16, 'hicxvvcvhp@sdnainfotech.com', '1', '202cb962ac59075b964b07152d234b70', '2016-09-09 07:44:24', '2016-09-09 07:44:24'),
+(17, 'himani.aror1a@sdnainfotech.com', '1', '202cb962ac59075b964b07152d234b70', '2016-09-20 12:55:44', '2016-09-20 12:55:44'),
+(18, 'mukesh.kaushal@sdnavcbhvhtech.com', '1', '202cb962ac59075b964b07152d234b70', '2016-09-27 09:42:34', '2016-09-27 09:42:34');
 
 -- --------------------------------------------------------
 
@@ -1165,22 +1094,8 @@ CREATE TABLE `user_addresses` (
 INSERT INTO `user_addresses` (`id`, `user_id`, `receiver_name`, `street_address`, `city`, `state`, `country`, `postalcode`, `telephone`, `fax_no`, `block_no`, `unit_no`, `created`, `modified`) VALUES
 (1, 9, '', '12/northway', 'newyork', 'newyork', 'United States', '160101', 2147483647, 75555, 'rtgr435', '566ghg', '2016-07-19 09:45:07', '2016-09-07 10:23:13'),
 (2, 9, '', '23 northway nuw', 'new-york', 'newyork chan', 'United States', '3344443', 565456, 65466546, 'fgg', '5yy', '2016-07-19 09:47:48', '2016-09-07 10:22:58'),
-(3, 50, 'Himani xxx', '123 SDDD', 'kalpna@sdnainfotech.com', '', 'SINGAPORE', '122001', 2147483647, NULL, '', '', '2016-10-05 13:02:28', '2016-10-05 13:23:11'),
 (5, 9, '', '#gfgf7755', 'Manimajra', 'Chandigarh', 'India', '160101', 12435688, 54656546, 'gdfgd45', '6458uu', '2016-09-08 12:16:37', '2016-09-08 12:16:37'),
-(6, 9, '', '#g5gg66/5456767', 'Manimajra', 'Chandigarh', 'India', '1235677', 646784666, 444356, 'b66', '756jj', '2016-09-08 12:21:17', '2016-09-08 12:21:17'),
-(12, 30, '', '133001', '', '', 'Singapore', 'www.gmail.com', 2341113, NULL, '', '', '2016-09-29 06:36:12', '2016-09-29 06:36:12'),
-(17, 35, '', '133001', '', '', 'Singapore', 'www.gmail.com', 2341113, NULL, '', '', '2016-09-29 07:35:05', '2016-09-29 07:35:05'),
-(19, 37, '', 'dfdxsf', '', '', 'Singapore', '34r3w4r', 454545, NULL, '', '', '2016-10-03 09:52:19', '2016-10-03 09:52:19'),
-(20, 38, '', '133001', '', '', 'Singapore', 'www.gmail.com', 2341113, NULL, '', '', '2016-10-04 07:37:06', '2016-10-04 07:37:06'),
-(23, 41, '', '133001', '', '', 'Singapore', 'www.gmail.com', 2341113, NULL, '', '', '2016-10-04 08:52:12', '2016-10-04 08:52:12'),
-(24, 42, '', '133001', '', '', 'Singapore', 'www.gmail.com', 2341113, NULL, '', '', '2016-10-04 08:53:40', '2016-10-04 08:53:40'),
-(25, 43, '', '133001', '', '', 'Singapore', 'www.gmail.com', 2341113, NULL, '', '', '2016-10-04 08:56:32', '2016-10-04 08:56:32'),
-(27, 45, '', '133001', '', '', 'Singapore', 'www.gmail.com', 2341113, NULL, '', '', '2016-10-04 09:04:05', '2016-10-04 09:04:05'),
-(28, 46, '', '133001', '', '', 'Singapore', 'www.gmail.com', 2341113, NULL, '', '', '2016-10-04 09:36:23', '2016-10-04 09:36:23'),
-(29, 47, '', '133001', '', '', 'Singapore', 'www.gmail.com', 2341113, NULL, '', '', '2016-10-04 09:37:58', '2016-10-04 09:37:58'),
-(30, 48, '', '4545', '', '', 'Singapore', '454545', 2147483647, NULL, '', '', '2016-10-05 06:48:28', '2016-10-05 06:48:28'),
-(33, 50, '', '45454545', '', '', 'Singapore', '45454545', 45454545, NULL, '', '', '2016-10-05 12:51:17', '2016-10-05 12:51:17'),
-(34, 50, 'dee_receiver', '123 SDDD', 'dee_shipping@gmail.com', 'haryana', 'Singapore', '122001', 2147483647, NULL, '', '', '2016-10-05 12:57:52', '2016-10-05 12:57:52');
+(6, 9, '', '#g5gg66/5456767', 'Manimajra', 'Chandigarh', 'India', '1235677', 646784666, 444356, 'b66', '756jj', '2016-09-08 12:21:17', '2016-09-08 12:21:17');
 
 -- --------------------------------------------------------
 
@@ -1193,9 +1108,8 @@ CREATE TABLE `user_billings` (
   `user_id` int(11) NOT NULL,
   `sender_name` varchar(255) NOT NULL,
   `fax_no` varchar(200) DEFAULT NULL,
-  `telephone_no` varchar(200) NOT NULL,
   `email_address` varchar(255) NOT NULL,
-  `block_no` varchar(255) NOT NULL,
+  `block_no` varchar(255) DEFAULT NULL,
   `unit_no` varchar(255) NOT NULL,
   `street` varchar(255) NOT NULL,
   `postalcode` varchar(255) NOT NULL,
@@ -1209,9 +1123,8 @@ CREATE TABLE `user_billings` (
 -- Dumping data for table `user_billings`
 --
 
-INSERT INTO `user_billings` (`id`, `user_id`, `sender_name`, `fax_no`, `telephone_no`, `email_address`, `block_no`, `unit_no`, `street`, `postalcode`, `telephone`, `country`, `created`, `modified`) VALUES
-(1, 9, 'Pradeep', '', '', 'pradeep.ddd@gmail.com', '#123', '55', 'Town', '160110', 2147483647, 'india', '2016-09-20 00:00:00', '2016-09-26 12:28:35'),
-(3, 50, 'kalpna', '', '98157716781', 'deepak.mmm@gmail.com', '', '67', 'street_123', '122001', 0, 'SINGAPORE', '2016-10-05 12:57:51', '2016-10-05 13:23:11');
+INSERT INTO `user_billings` (`id`, `user_id`, `sender_name`, `fax_no`, `email_address`, `block_no`, `unit_no`, `street`, `postalcode`, `telephone`, `country`, `created`, `modified`) VALUES
+(1, 9, 'Pradeep', '', 'pradeep.ddd@gmail.com', '#123', '55', 'Town', '160110', 2147483647, 'india', '2016-09-20 00:00:00', '2016-09-26 12:28:35');
 
 -- --------------------------------------------------------
 
@@ -1232,7 +1145,7 @@ CREATE TABLE `user_details` (
   `blockno` varchar(255) NOT NULL,
   `unitno` varchar(255) NOT NULL,
   `company` varchar(255) DEFAULT NULL,
-  `position` varchar(255) NOT NULL,
+  `position` varchar(255) DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1243,18 +1156,11 @@ CREATE TABLE `user_details` (
 
 INSERT INTO `user_details` (`id`, `user_id`, `firstname`, `lastname`, `image`, `image_dir`, `dob`, `gender`, `mobile`, `blockno`, `unitno`, `company`, `position`, `created`, `modified`) VALUES
 (14, 9, 'pradeep', 'dangwal', 'Hydrangeas.jpg', 'webroot\\img\\files\\UserDetails\\image\\', '08-12-1986', 'Female', '12345675678', 'dfg', '34', 'dfg', 'dfg', '2016-08-18 12:24:01', '2016-09-08 12:10:20'),
-(26, 30, 'blk009', 'un009', '', '', '', '', '', 'street1', 'singapore', 'comp123', 'deee', '2016-09-29 06:36:12', '2016-09-29 06:36:12'),
-(31, 35, 'blk009', 'un009', '', '', '', '', '', 'street1', 'singapore', NULL, 'deee111', '2016-09-29 07:35:05', '2016-09-29 07:35:05'),
-(33, 37, 'xxx', 'xxx', '', '', '', '', '', '343', '3434', '', 'drtdrtg', '2016-10-03 09:52:19', '2016-10-03 09:52:19'),
-(34, 38, 'blk009', 'un009', '', '', '', '', '', 'street1', 'singapore', 'comp1', 'deee', '2016-10-04 07:37:07', '2016-10-04 07:37:07'),
-(37, 41, 'blk009', 'un009', '', '', '', '', '', 'street1', 'singapore', 'comp1', 'deee', '2016-10-04 08:52:12', '2016-10-04 08:52:12'),
-(38, 42, 'blk009', 'un009', '', '', '', '', '', 'street1', 'singapore', 'comp1', 'deee', '2016-10-04 08:53:40', '2016-10-04 08:53:40'),
-(39, 43, 'blk009', 'un009', '', '', '', '', '', 'street1', 'singapore', 'comp1', 'deee', '2016-10-04 08:56:32', '2016-10-04 08:56:32'),
-(41, 45, 'blk009', 'un009', '', '', '', '', '', 'street1', 'singapore', 'comp1', 'deee', '2016-10-04 09:04:05', '2016-10-04 09:04:05'),
-(42, 46, 'blk009', 'un009', '', '', '', '', '', 'street1', 'singapore', 'comp1', 'deee', '2016-10-04 09:36:23', '2016-10-04 09:36:23'),
-(43, 47, 'blk009', 'un009', '', '', '', '', '', 'street1', 'singapore', 'comp1', 'deee', '2016-10-04 09:37:58', '2016-10-04 09:37:58'),
-(44, 48, 'xxx', 'Thakur', '', '', '', '', '', '454554', '34', NULL, '454545', '2016-10-05 06:48:28', '2016-10-05 06:48:28'),
-(46, 50, 'Himani', 'xxx', '', '', '', '', '', '454554', '45', NULL, 'software eningeer', '2016-10-05 12:51:17', '2016-10-05 12:51:17');
+(15, 10, 'Himani', 'Arora', 'Chrysanthemum.jpg', 'webroot\\img\\files\\UserDetails\\image\\', '08-07-1980', 'Female', '9123456789', '45 gh , Vihar colony', '12345', 'SDNA', 'Project manager', '2016-09-06 05:07:47', '2016-09-23 05:31:11'),
+(16, 11, 'dfg', 'dfg', 'Hydrangeas.jpg', 'webroot\\img\\files\\UserDetails\\image\\', '05-09-2016', 'Male', '554656', '', '', '', '', '2016-09-06 05:57:40', '2016-09-06 05:58:33'),
+(21, 16, 'Himani', 'Arora', 'Jellyfish.jpg', 'webroot\\img\\files\\UserDetails\\image\\', '29-08-2016', 'Male', '43543232456', '45 gh , Vihar colony', '12345', 'SDNA', 'Project manager', '2016-09-09 07:44:24', '2016-09-09 07:44:24'),
+(22, 17, 'dfd', 'Arora', '', '', '13-09-2016', 'Male', '9123476777', '', '', '', '', '2016-09-20 12:55:44', '2016-09-20 12:55:44'),
+(23, 18, 'MUk', 'kau', 'Hydrangeas.jpg', 'webroot\\img\\files\\UserDetails\\image\\', '30-05-2005', 'Male', '6787887878888', 'gf', 'gfg', '6ggg', 'fgg', '2016-09-27 09:42:34', '2016-09-27 09:42:34');
 
 -- --------------------------------------------------------
 
@@ -1269,13 +1175,6 @@ CREATE TABLE `wishlists` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `wishlists`
---
-
-INSERT INTO `wishlists` (`id`, `user_id`, `product_id`, `created`, `modified`) VALUES
-(1, 49, 7, '2016-10-05 09:47:34', '2016-10-05 09:47:34');
 
 --
 -- Indexes for dumped tables
@@ -1526,27 +1425,27 @@ ALTER TABLE `aros_acos`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `cart_products`
 --
 ALTER TABLE `cart_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `category_details`
 --
 ALTER TABLE `category_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `colors`
 --
@@ -1581,7 +1480,7 @@ ALTER TABLE `orders_billings`
 -- AUTO_INCREMENT for table `orders_products`
 --
 ALTER TABLE `orders_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `orders_shippings`
 --
@@ -1606,42 +1505,42 @@ ALTER TABLE `order_update_statuses`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `products_attrs`
 --
 ALTER TABLE `products_attrs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `products_categories`
 --
 ALTER TABLE `products_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `products_images`
 --
 ALTER TABLE `products_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `products_marketing_images`
 --
 ALTER TABLE `products_marketing_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `products_prices`
 --
 ALTER TABLE `products_prices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `products_relateds`
 --
 ALTER TABLE `products_relateds`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `promotions`
 --
 ALTER TABLE `promotions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `slider_images`
 --
@@ -1651,27 +1550,27 @@ ALTER TABLE `slider_images`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `user_billings`
 --
 ALTER TABLE `user_billings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

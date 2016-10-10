@@ -7,6 +7,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Carts\Carts;
 use Promotions\Promotions;
+use Users\Users;
 /**
  * Checkout Controller
  *
@@ -17,7 +18,7 @@ class CheckoutController extends AppController
 	
 	public function beforeFilter(Event $event)
     {      
-		$this->Auth->allow(['detailsToCheckout','proceedToSuccessCheckout']);
+		$this->Auth->allow(['detailsToCheckout']);
     }
 
 	public function initialize()
@@ -31,17 +32,30 @@ class CheckoutController extends AppController
 // Method to fetch all details for checkout Front-End page
 //************************************************
 	
-	public function detailsToCheckout(){
-		
-		//header('Content-Type: application/json');
-		//header('Access-Control-Allow-Origin: *'); 
+public function detailsToCheckout($token=null,$user_id=null){
+		header('Content-Type: application/json');
+		header('Access-Control-Allow-Origin: *'); 
 
 		$session = $this->request->session();
 		$current_user = $this->request->session()->read('Current_User');		
 
+		//GET LOGIN TOKEN
+		 require_once(ROOT .DS. "Vendor" . DS  . "Users" . DS . "Users.php");		
+		 $Users = new Users;
+		 $user_token = $Users->login_token($user_id);
+		//-----------------------------------------
+		
+if(strcmp((string)$token,(string)$user_token)!=0){
+$response['msg']='Unauthorized access. Please login to get details.';
+$response['response_code']='0';			
+echo json_encode($response);
+die;
+
+}else{	
+
 		$Carts = TableRegistry::get('Carts');
 		$cartDetails = $Carts->find('all',[
-		'conditions'=>['Carts.user_id'=>$current_user[0]['id']],
+		'conditions'=>['Carts.user_id'=>$user_id],
 		'contain' => ['CartProducts.Products.ProductsAttrs.Brands','CartProducts.Products.ProductsPrices','CartProducts.Products.ProductsMarketingImages' , 'Users.UserAddresses', 'Users.UserDetails', 'Users.UserBillings', 'CartProducts.Products.Promotions']
 		]);
 		$cartDetail = $cartDetails->first();
@@ -78,6 +92,9 @@ $promoId  = $this->satisfyPromoId($productId, $quantity, $cartId);
 //***********************************************/	
 //****** Getting Setisfy Promorion id Ends  ******/ 
 //***********************************************/	
+if($promoId==NULL){
+goto emptyPromo;	
+}
 				$Promotions = TableRegistry::get('Promotions');
 				$PromotionsDetails = $Promotions->get($promoId, [
 				'contain'=>['ChildProducts.ProductsMarketingImages']
@@ -113,7 +130,7 @@ $promoId  = $this->satisfyPromoId($productId, $quantity, $cartId);
 			
 			}
 		}else{
-		
+		emptyPromo:
 			 $prices=array();
 					$prices['list_price']=$cartDetail['cart_products'][$key]['product']['products_price']['list_price'];
 					$prices['final_item_price']=$prices['list_price'];
@@ -149,7 +166,7 @@ $promoId  = $this->satisfyPromoId($productId, $quantity, $cartId);
 		echo json_encode($cartDetail);
 		exit;	
 	}
-
+}
 //************************************************
 // Method to calculate Satisfy PromoId based on Product Id & Quantity.
 //************************************************	
@@ -235,84 +252,6 @@ $promoId  = $this->satisfyPromoId($productId, $quantity, $cartId);
 	notNiDate:
 	return $pormoIDs = NULL;
 	} 
-	
-	
-//************************************************
-// Method to calculate Satisfy PromoId based on Product Id & Quantity.
-//************************************************	
-/* 	public function satisfyPromoId($productId, $quantity, $cartId){
-	
-		$Products = TableRegistry::get('Products');
-		$ProductsDetails = $Products->get($productId,[
-		'contain' => [ 'ProductsPrices','Promotions']
-		]);
-
-		$Carts = TableRegistry::get('Carts');
-		$cartDetails = $Carts->get($cartId,[
-		'contain' => ['CartProducts.Products.Promotions','CartProducts.Products.ProductsPrices']
-		]);
-	
-
-		foreach($ProductsDetails['promotions'] as $keyss => $promotions){
-			
-			if(strtotime($promotions['start_date']) <= strtotime(date("Y-m-d")) AND strtotime(date("Y-m-d")) <= strtotime($promotions['end_date'])) {
-				$assciatedProductID = $promotions->child_product_id;
-				if($promotions->quantity_parent<=$quantity){
-					
-					$pormoIDs[$keyss]['id']=$promotions->id;
-					
-					if($promotions->discount_type=="D" || $promotions->discount_type=="B" ){
-					if($promotions->discount_parent_in=="$"){
-					$pormoIDs[$keyss]['discount'] = $promotions->discounted_amount_parent*$quantity;
-					}elseif($promotions->discount_parent_in=="%")
-					{
-					$discountPercentagePrice = ($ProductsDetails->products_price->list_price * $promotions->discounted_amount_parent)/100;	
-					$pormoIDs[$keyss]['discount'] = $discountPercentagePrice*$quantity;
-					}
-					}elseif($promotions->discount_type=="P" || $promotions->discount_type=="F"){
-							foreach($cartDetails['cart_products'] as $key => $child_product){
-								
-								if($assciatedProductID == $child_product['prod_id'])
-								{
-										if($child_product->prod_quantity>=$promotions->quantity_child)
-										{
-											if($promotions->discount_child_in=="$"){
-											$pormoIDs[$keyss]['discount'] = $promotions->discounted_amount_child * $promotions->quantity_child;
-											}elseif($promotions->discount_child_in=="%")
-											{
-												
-											$discountPercentagePrice = ($child_product->product->products_price->list_price * $promotions->discounted_amount_child)/100;	
-											$pormoIDs[$keyss]['discount'] = $discountPercentagePrice*$promotions->quantity_child;
-											}
-
-										}else{
-											$pormoIDs[$keyss]['discount'] = 0;
-											
-										}							
-								}
-							}				
-					}			
-				}
-			}
-	
-		}
-		
-	$price = array();
-	foreach ($pormoIDs as $key => $row)
-	{
-	$price[$key] = $row['discount'];
-	}
-	array_multisort($price, SORT_DESC, $pormoIDs);	
-		
-	//debug($pormoIDs);	
-	//die;
-	//debug($pormoIDs[0]['id']);
-		
-	return $pormoIDs[0]['id'];
-	} 
-
-	 */
-	
 	
 //************************************************
 // Method to calculate Without Any Promos
@@ -528,50 +467,6 @@ $promoId  = $this->satisfyPromoId($productId, $quantity, $cartId);
 	public function emptyCart(){
 			
 	}	
-	
-	
-	
-//************************************************
-// Method to proceed Checkout with Success Params
-//************************************************
-	public function proceedToSuccessCheckout(){
-		
-		
-		//CHECK LOGIN DETAILS.....
-			$session = $this->request->session();
-			$current_user = $this->request->session()->read('Current_User');		
 
-		
-		$Carts = TableRegistry::get('Carts');
-		$Orders = TableRegistry::get('Orders');
-		
-		$cartDetails = $Carts->find('all',[
-		'conditions'=>['Carts.user_id'=>$current_user[0]['id']],
-		'contain' => ['CartProducts.Promotions','Users.UserAddresses', 'Users.UserDetails', 'Users.UserBillings']
-		])->toArray();
-		
-		
-		$user = $Orders->newEntity();
-        if ($this->request->is('post')) {
-			
-           /*  $user = $Orders->patchEntity($user, $this->request->data);
-	
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
-            } */
-        }
-		
-
-		debug($cartDetails);
-		die;
-
-		
-	}
-	
-	
-	
 
 }

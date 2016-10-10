@@ -119,7 +119,7 @@ class UsersController extends AppController
 					//echo json_encode($response);
 					//die;
 				}else{
-				
+
 					//SEND EMAIL...............................
 					//http://book.cakephp.org/3.0/en/core-libraries/email.html
 						$emailer = new Email();
@@ -128,8 +128,6 @@ class UsersController extends AppController
 						//$emailto='deepak.rathi@sdnainfotech.com';
 						//$emailto=$email;
 						$emailer->viewVars(['logo_link' =>Router::url('/', true)]);
-
-							
 						try {
 
 						$res = $emailer->from([''.$template['email'].''])
@@ -139,22 +137,17 @@ class UsersController extends AppController
 							->subject('Feedback/Enquiry from Contact-us section')                   
 							->send();
 
-						
-
 						}catch (Exception $e){
 							$mesg['msg'][0] ='Exception : '.$e->getMessage(). "\n";
 							$mesg['response_code']='0';
 
 						}
-
-						
 					//----------------------------------------
 
 						$mesg['msg']='You have been contacted with site admin.Your reply will be soon.';
 						$mesg['response_code']='1';
 						echo json_encode($mesg);
 						die;
-						die($ADMIN_FEEDBACK_EMAIL);
 				
 				}
 				
@@ -269,6 +262,8 @@ class UsersController extends AppController
 		$current_user = $this->request->session()->read('Current_User');
 
 		$wish_list->user_id = $user_id;
+
+
 		// GET USER TOKEN
 		require_once(ROOT .DS. "Vendor" . DS  . "Users" . DS . "Users.php");		
 		$Users = new Users;
@@ -1126,7 +1121,7 @@ class UsersController extends AppController
 				UsrDetails.blockno as USER_SHIPPING_BLOCK,
 				UsrDetails.unitno as USER_SHIPPING_UNITNO,
 				UsrBillingAddress.sender_name as USER_BILLING_SENDERNAME,
-				UsrBillingAddress.telephone_no as USER_BILLING_CONTACT_NO,
+				UsrBillingAddress.telephone as USER_BILLING_CONTACT_NO,
 				UsrBillingAddress.fax_no as USER_BILLING_FAXNO,
 				UsrBillingAddress.email_address as USER_BILLING_EMAIL,
 				UsrBillingAddress.block_no as USER_BILLING_BLOCK_NO,
@@ -1188,10 +1183,10 @@ class UsersController extends AppController
 
 				$billing['user_id']= @$user_id;
 				$billing['sender_name']= @$_REQUEST['USER_BILLING_SENDERNAME'];
-				$billing['telephone_no']=@$_REQUEST['USER_BILLING_CONTACT_NO'];
+				$billing['telephone']=@$_REQUEST['USER_BILLING_CONTACT_NO'];
 				$billing['fax_no']=@$_REQUEST['USER_BILLING_FAXNO'];
 				$billing['email_address']=@$_REQUEST['USER_BILLING_EMAIL'];
-				$billing['block_no']=@$_REQUEST['USER_BILLING_BLOCK_NO'];
+				//$billing['block_no']=@$_REQUEST['USER_BILLING_BLOCK_NO'];
 				$billing['unit_no']=@$_REQUEST['USER_BILLING_UNIT_NO'];
 				$billing['street']=@$_REQUEST['USER_BILLING_STREET_NAME'];
 				$billing['postalcode']=@$_REQUEST['USER_BILLING_POSTAL_CODE'];
@@ -1214,10 +1209,10 @@ class UsersController extends AppController
 					//pre($UserBillingsRS->id);
 					$billing['id']= @$UserBillingsRS->id;
 					$billing['sender_name']= @$_REQUEST['USER_BILLING_SENDERNAME'];
-					$billing['telephone_no']=@$_REQUEST['USER_BILLING_CONTACT_NO'];
+					$billing['telephone']=@$_REQUEST['USER_BILLING_CONTACT_NO'];
 					$billing['fax_no']=@$_REQUEST['USER_BILLING_FAXNO'];
 					$billing['email_address']=@$_REQUEST['USER_BILLING_EMAIL'];
-					$billing['block_no']=@$_REQUEST['USER_BILLING_BLOCK_NO'];
+					//$billing['block_no']=@$_REQUEST['USER_BILLING_BLOCK_NO'];
 					$billing['unit_no']=@$_REQUEST['USER_BILLING_UNIT_NO'];
 					$billing['street']=@$_REQUEST['USER_BILLING_STREET_NAME'];
 					$billing['postalcode']=@$_REQUEST['USER_BILLING_POSTAL_CODE'];

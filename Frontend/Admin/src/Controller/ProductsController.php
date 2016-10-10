@@ -71,8 +71,7 @@ class ProductsController extends AppController
 		
 		$product = $this->Products->newEntity();
     if ($this->request->is('post')) {
-		
-		
+	
 		
 	//Product Code Genration	
 		//1st Phase
@@ -93,6 +92,7 @@ class ProductsController extends AppController
 		//Final Item Code
 		$itemCode = $firstPhase.$secondPhase.'-'.$CountPhase; 
 		
+		if($this->request->data['products_image']['image']['name']!=''){
 		
 		$ColorId = $this->request->data['products_image']['color_id'];
 		$colorString = $this->Products->ProductsImages->Colors->get($ColorId);
@@ -101,16 +101,13 @@ class ProductsController extends AppController
 		
 		//Final Product Code
 		$productCode = $firstPhase.$secondPhase.'-'.$CountPhase.$ColorPhase;
-		
-
-		$this->request->data['item_code']= $itemCode ;
-		
-		$this->request->data['status']='N';
-		
 		$this->request->data['products_image']['product_code']= $productCode ;
 		$this->request->data['products_image']['status']=1;	
-		
+		}
 
+		$this->request->data['item_code']= $itemCode ;
+		$this->request->data['status']='N';
+		
 		$item_codes[]=$this->request->data['products_related']['relatedproduct1']['item_code'];		
 		$item_codes[]=$this->request->data['products_related']['relatedproduct2']['item_code'];		
 		$item_codes[]=$this->request->data['products_related']['relatedproduct3']['item_code'];		
@@ -128,7 +125,7 @@ class ProductsController extends AppController
 						$this->request->data['products_related']['related_product_'.$key]=0;
 					}
 		}
-
+	$this->request->data['products_attr']['video_link'] = 'http://'.$this->request->data['products_attr']['video_link'];
 	$product = $this->Products->patchEntity($product, $this->request->data,[
 			'associated' => ['ProductsAttrs', 'Categories', 'ProductsAttrs', 'ProductsPrices','ProductsRelateds', 'ProductsCategories']
 			]);  
@@ -157,12 +154,13 @@ class ProductsController extends AppController
 									$aa = $ProductsMarketingImages->patchEntity($aa,$image_photo);
 									$ProductsMarketingImages->save($aa);
 								} 			
-				//Save Colored images			
+				//Save Colored images
+								if($this->request->data['products_image']['image']['name']!=''){
 									$this->request->data['products_image']['product_id']= $id;
 									$ab = $ProductsImages->newEntity();
 									$ab = $ProductsImages->patchEntity($ab,$this->request->data['products_image']);
 									$ProductsImages->save($ab);	
-								
+								}
 				$this->Flash->success(__('The product has been saved.'));	
 				return $this->redirect(['action' => 'index']);
 			} else {
