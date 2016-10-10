@@ -32,6 +32,7 @@
         };
     }
     angular.module('blsApp')
-       .controller('loginCtrl', ['$scope', '$http', '$location', '$state', 'blsService', loginCtrl]);
+     .controller('loginCtrl', ['$scope', '$http', '$location', '$state', 'blsService', loginCtrl]);
+      // .controller('loginCtrl', ['$scope', '$http', '$location', '$state', 'blsService', 'localStorageService', loginCtrl]);
 }());
 

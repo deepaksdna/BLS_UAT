@@ -125,13 +125,10 @@
                                 <input type="text" data-ng-model="main.companyName" class="form-control" placeholder="">
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{ 'has-error': userForm.position.$touched && userForm.position.$invalid }">
-                            <label class="col-sm-3 control-label">Position: </label>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Position (optional): </label>
                             <div class="col-sm-9">
-                                <input type="text" name="position" class="form-control" data-ng-model="main.position" ng-minlength="5" required>
-                                <div class="help-block" ng-messages="userForm.position.$error" ng-if="userForm.position.$touched">
-                                    <div ng-messages-include="app/templates/messages.html"></div>
-                                </div>
+                                <input type="text" name="position" class="form-control" data-ng-model="main.position">
                             </div>
                         </div>
                     </div>

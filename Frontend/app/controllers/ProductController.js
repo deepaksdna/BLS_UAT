@@ -28,7 +28,7 @@
         var brandId = $stateParams.BrandId;
         $scope.CategoryId = categoryId;
         if (categoryId != null && brandId == 0) {
-            console.log('first');
+            //console.log('first');
             getProducts();
         }
         if (productId != null) {
@@ -59,11 +59,29 @@
         $scope.increment = function () {
             //if ($scope.count >= 11) { return; }
             $scope.count++;
+            $scope.countValue = $scope.count;
         };
         $scope.decrement = function () {
             if ($scope.count <= 1) { return; }
             $scope.count--;
+            $scope.countValue = $scope.count;
         };
+        $scope.getProductInfo=function(prodId)
+        {
+            blsService.getProductDetail(prodId).success(function (data) {
+                $scope.productInfo = data.PRODUCT_DETAILS;
+                $scope.prodimage = data.PRODUCTMARKETING_IMAGE_PATH;
+               // console.log($scope.productInfo);
+               // console.log($scope.productInfo.image);
+            });
+        
+        }
+        $scope.addToCartItem = function () {
+           // console.log('dfdf');
+            blsService.addToCartItem(productId, $scope.count, blsService.Token, blsService.UserId).success(function (data) {
+                console.log(data);
+            });
+        }
         function getProducts() {
             $scope.products = [];
             blsService.getProducts(categoryId).success(function (data) {
@@ -203,17 +221,17 @@
                 });
                 $scope.selectedColour = $scope.colours[0];
                 $scope.relatedproducts = data.RELATED_PRODUCTS;
-                $scope.marketingimage = data.PRODUCTMARKETING_IMAGE_PATH + data.PRODUCT_DETAILS[0].image;
+                $scope.marketingimage = data.PRODUCTMARKETING_IMAGE_PATH + data.PRODUCT_DETAILS.image;
                 $scope.prodimage = data.PRODUCTMARKETING_IMAGE_PATH;
                 //product information
-                $scope.category_id = data.PRODUCT_DETAILS[0].category_id;
+                $scope.category_id = data.PRODUCT_DETAILS.category_id;
                 $scope.brandImage = data.PRODUCT_BRAND_IMAGE_URL;
                 $scope.brandName = data.PRODUCT_BRAND_DETAILS.BRAND_NAME;
-                $scope.productModel = data.PRODUCT_DETAILS[0].PRODUCT_MODEL;
-                $scope.productTitle = data.PRODUCT_DETAILS[0].PRODUCT_TITLE;
-                $scope.productPrice = data.PRODUCT_DETAILS[0].list_price;
-                $scope.productVideoLink = data.PRODUCT_DETAILS[0].PRODUCT_VIDEOLINK;
-                $scope.productDescription = data.PRODUCT_DETAILS[0].PRODUCT_DESC;
+                $scope.productModel = data.PRODUCT_DETAILS.PRODUCT_MODEL;
+                $scope.productTitle = data.PRODUCT_DETAILS.PRODUCT_TITLE;
+                $scope.productPrice = data.PRODUCT_DETAILS.list_price;
+                $scope.productVideoLink = data.PRODUCT_DETAILS.PRODUCT_VIDEOLINK;
+                $scope.productDescription = data.PRODUCT_DETAILS.PRODUCT_DESC;
                 $scope.promoPrice = data.PRODUCT_DETAILS.FINAL_DISPLAY_PRICE_WITHOUT_GST;
                 $scope.discountType = data.PRODUCT_DETAILS.PROMOTIONS_DISCOUNT_TYPE;
                // console.log($scope.promoPrice);

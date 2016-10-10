@@ -29,11 +29,10 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="demo-card-image cursor-pointer wow fadeInUp">
-                        <img ng-src="{{category.image_url_path}}" class="img-responsive">
+                        <img ng-src="{{category.image_url_path}}" class="img-responsive" data-toggle="collapse" data-parent="#accordion" href="#collapse{{category.id}}" aria-expanded="true" aria-controls="collapseOne">
                         <div class="mdl-card__actions">
                             <h1 class="white-text text-center" data-toggle="collapse" data-parent="#accordion" href="#collapse{{category.id}}" aria-expanded="true" aria-controls="collapseOne">{{ category.name }}</h1>
                         </div>
-                        
                         <div data-ng-show="category.sub_cat.length !=0" class="cate-data primary-color panel-collapse collapse" id="collapse{{category.id}}" role="tabpanel" aria-labelledby="headingOne">
                             <ul class="subcategory white-text" data-ng-repeat="subCategory in category.sub_cat">
                                 <li><a ui-sref="productTemplate1({CategoryId:subCategory.CHILD_CATEGORY_ID,BrandId:0})">{{subCategory.name|uppercase}}</a></li>

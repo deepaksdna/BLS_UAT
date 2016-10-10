@@ -1251,3 +1251,6 @@ textarea {
         height: 350px;
     }
 }
+.search .dropdown:hover .dropdown-menu {
+    display: block;
+}

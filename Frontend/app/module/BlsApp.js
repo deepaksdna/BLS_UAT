@@ -93,10 +93,10 @@ blsApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
              controller: 'productCtrl'
          })
          .state('products', {
-          
+             url: '/products'
          })
         .state('promotion', {
-          
+            url: '/promotion'
         })
         .state('productTemplate1', {
             url: '/productTemplate1?CategoryId&BrandId',

@@ -6,7 +6,6 @@
                 telephone_no: $scope.main.telephone_no, fax_no: $scope.main.fax_no, website: $scope.main.website, yourmessage: $scope.main.yourmessage
             };
             blsService.contactUser(contact).success(function (result) {
-               // console.log(result);
                 if(result.response_code==1)
                 {
                     growl.success(result.msg, { title: 'Success!' });
@@ -16,7 +15,7 @@
                 }
                 else
                 {
-                    growl.error('An Error has occured while sending request!', { title: 'Error!' });
+                    growl.error(result.msg, { title: 'Error!' });
                 }
             });
         }

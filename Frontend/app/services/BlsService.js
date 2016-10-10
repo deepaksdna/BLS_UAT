@@ -1,9 +1,10 @@
-﻿Fangular.module('blsApp').factory('blsService', function ($http, $q) {
-       var baseUrl = 'http://58.185.95.114:8282/Frontend/Admin/API/';
-	   //http://58.185.95.114:8282/Frontend/Admin/API/
-    //    var baseUrl = 'http://112.196.17.77:81/bls/admin/API/';
+﻿angular.module('blsApp').factory('blsService', function ($http, $q) {
+    //   var baseUrl = 'http://www.nanoappstore.com:8282/admin/API/';
+	    var baseUrl = 'http://112.196.17.77:81/bls/admin/API/';
     //  var baseUrl = 'http://192.168.0.82/blsmukesh/API/';
     // var baseUrl = 'http://localhost/bls/API/';
+
+
     var Token;
     var UserId;
     var getCategories = function () {
@@ -118,11 +119,23 @@
                 },
         });
     }
+    var addToCartItem = function (id, quantity, token, userId) {
+        var url = baseUrl + 'Carts/addToCart/' + id + '/' + quantity + '/' + token + '/' + userId;
+        console.log(url);
+        return $http({
+            url: url,
+            method: "POST",
+            params: addToCartItem,
+            headers:
+                {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+        });
+    }
 	
 	//By Mukesh 
-	var addToCart = function (id, quantity) {
-		
-        var url = baseUrl + 'Carts/addToCart/' + id + '/' + quantity;
+	var addToCart = function (id, quantity, token, userId) {
+		var url = baseUrl + 'Carts/addToCart/' + id + '/' + quantity + '/' + token + '/' + userId;
         return $http({
             url: url,
             method: "POST",
@@ -134,8 +147,8 @@
         });
     }
 	
-	var removeFromCart = function (id) {
-        var url = baseUrl + 'Carts/removeProductCart/' + id;
+	var removeFromCart = function (id, token, userId) {
+        var url = baseUrl + 'Carts/removeProductCart/' + id + '/' + token + '/' + userId;
         return $http({
             url: url,
             method: "POST",
@@ -146,6 +159,20 @@
                 },
         });
     }
+	
+	var proceedToCheckout = function (token, userId) {
+        var url = baseUrl + 'ProcessPayment/dopayment/' + token + '/' + userId + '.json?callback=JSON_CALLBACK';
+        return $http({
+            url: url,
+            method: "POST",
+            params: proceedToCheckout,
+            headers:
+                {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+        });
+    }
+	
 	
 	
 	//By Mukesh ends
@@ -194,13 +221,14 @@
 
     //By Mukesh	Starts Here
 
-    var getCartDetails = function () {
-        return $http.get(baseUrl + 'carts/detailsToCart')
+    var getCartDetails = function (token, userId) {
+
+        return $http.get(baseUrl + 'carts/detailsToCart/'+ token + '/' + userId+'.json?callback=JSON_CALLBACK')
     }
 
 	
-	var getDetailsToCheckout = function () {
-        return $http.get(baseUrl + 'checkout/detailsToCheckout')
+	var getDetailsToCheckout = function (token, userId) {
+        return $http.get(baseUrl + 'checkout/detailsToCheckout/'+ token + '/' + userId)
     }
 	
     var getConfigValues = function () {
@@ -235,8 +263,10 @@
 		 getCartDetails: getCartDetails,
 		getConfigValues:getConfigValues,
 		getDetailsToCheckout:getDetailsToCheckout,
-		addToCart:addToCart,
-		removeFromCart:removeFromCart
+		addToCart: addToCart,
+		addToCartItem:addToCartItem,
+		removeFromCart:removeFromCart,
+		proceedToCheckout:proceedToCheckout
        
     };
 });

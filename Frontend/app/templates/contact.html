@@ -46,6 +46,7 @@
                         </div>
                         <div class="col-sm-4 mtop10">
                             <div class="row">
+                                <p>&nbsp;</p>
                                 <p>Blk 221 Boon Lay Place #01-210</p>
                                 <p>Singapore 640221</p>
                                 <p> Tel: 65 6261 3147/6261 3148 </p>
@@ -145,7 +146,7 @@
                                 <label class="col-sm-3 nopadding control-label">Telephone No.: </label>
                                 <div class="col-sm-9">
                                     <div class="row">
-                                        <input type="number" name="telephone_no" class="form-control" data-ng-model="main.telephone_no" ng-minlength="5" required>
+                                        <input type="number" name="telephone_no" class="form-control" data-ng-model="main.telephone_no" ng-minlength="10" ng-maxlength="12" required numeric>
                                         <div class="help-block" ng-messages="userForm.telephone_no.$error" ng-if="userForm.telephone_no.$touched">
                                             <div ng-messages-include="app/templates/messages.html"></div>
                                         </div>
@@ -164,7 +165,7 @@
                                 <label class="col-sm-3 nopadding control-label">Website: </label>
                                 <div class="col-sm-9">
                                     <div class="row">
-                                        <input type="url" name="website" class="form-control" data-ng-model="main.website" required>
+                                        <input type="url" name="website" class="form-control" data-ng-model="main.website" required ng-url="htt://">
                                         <div class="help-block" ng-messages="userForm.website.$error" ng-if="userForm.website.$touched">
                                             <div ng-messages-include="app/templates/messages.html"></div>
                                         </div>

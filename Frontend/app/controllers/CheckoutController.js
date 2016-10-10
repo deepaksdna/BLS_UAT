@@ -31,76 +31,22 @@
 			$scope.PaymentPanel=true;
 			 $scope.ConfirmPanel=false;
 	  }
-	   $scope.confirmButton=function()
-	  {
-			$scope.detailPanel=false;
-			$scope.PaymentPanel=false;
-			 $scope.ConfirmPanel=false;
-	  }
 	  
-	   //console.log($scope.products);
-		/* function getConfigValues() {
-            blsService.getConfigValues().success(function (data) {
-                $scope.ConfigValues = data;
-            });
-        }
-		function getTotalValue()
-		{
-			$scope.totalprice=0.00;
-			angular.forEach($scope.products,function(product){
-				$scope.totalprice+=(product.PRODUCT_DETAILS.BEST_DISCOUNTED_AMOUNT_WITHOUT_GST * product.PRODUCT_QUANTITY);
-
-			});
-			
-		$scope.GSTPrice = ($scope.totalprice*$scope.ConfigValues.gst)/100;
-		$scope.totalpriceWithGST = $scope.GSTPrice+$scope.totalprice;
-				
-								if($scope.totalpriceWithGST<$scope.ConfigValues.delivery_charge){
-									
-									$scope.deliveryFeeDisplay =  'S$'+$scope.ConfigValues.delivery_charge;
-									$scope.deliveryFee =  parseInt($scope.ConfigValues.delivery_charge);
-										
-								}else{
-									$scope.deliveryFeeDisplay= 'Free';
-									$scope.deliveryFee = parseInt(0);
-								}
-												
-		$scope.GrandTotalpriceWithGST = ($scope.totalpriceWithGST + $scope.deliveryFee);  
-			
-		}
-		
-		$scope.Increase=function(qty, id)
-		{
-			var quantity=parseInt(qty)+1;	
-			getProduct(id,quantity);
-			getTotalValue();
-		}
-		
-
-		$scope.Decrease=function(qty, id)
-		{
-			if(qty==1){
-				return false;
-			}else{
-			var quantity=parseInt(qty)-1;
-			getProduct(id,quantity);
-			}
-			getTotalValue();
-		}
-		
-		function getProduct(id,quantity)
-		{
-
-           angular.forEach($scope.products, function(value, key ) {
-			   if(value.PRODUCT_ID==id)
-			   {
-				     value.PRODUCT_QUANTITY=quantity; 
-			   }  
-			});
+	  
+$scope.confirmButton=  function()
+  {
+	  proceedToCheckout();
+  }
  
-		} */
+function proceedToCheckout(){
+	   blsService.proceedToCheckout(blsService.Token, blsService.UserId).success(function (data) {  
+	   console.log(data);
+            });
+  } 
+  
+	  
 		function getDetailsToCheckout() {
-			blsService.getDetailsToCheckout().success(function (data) {
+			blsService.getDetailsToCheckout(blsService.Token, blsService.UserId).success(function (data) {
 				$scope.checkout = data;
 				$scope.billings = $scope.checkout.user.user_billing;
 				$scope.values = $scope.checkout.user.user_addresses.length;

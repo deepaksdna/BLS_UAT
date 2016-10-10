@@ -47,7 +47,7 @@
   
   function addToCart(id,quantity){
 	  
-	   blsService.addToCart(id,quantity).success(function (data) {
+	   blsService.addToCart(id,quantity, blsService.Token, blsService.UserId).success(function (data) {
 		    $scope.products = [];
 		getCartDetails();
 		   
@@ -62,7 +62,7 @@
   
   function removeFromCart(id){
 	  
-	   blsService.removeFromCart(id).success(function (data) {
+	   blsService.removeFromCart(id, blsService.Token, blsService.UserId).success(function (data) {
 		    $scope.products = [];
 		getCartDetails();
 		   
@@ -73,8 +73,7 @@
   
   function getCartDetails() {
    getConfigValues();
-   blsService.getCartDetails().success(function (data) {
-    
+   blsService.getCartDetails(blsService.Token, blsService.UserId).success(function (data) {
 				$scope.checkout = data;
 				$scope.cart_products = $scope.checkout.cart_products;
 				$scope.grandPrices = $scope.checkout.user;
