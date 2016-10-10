@@ -1,0 +1,68 @@
+﻿<div class="container padding-footer mtop30">
+    <div class="row">
+        <div class="col-xs-12">
+            <ol class="breadcrumb">
+                <li><a ui-sref="home">Home</a></li>
+                <li ui-sref="accountdetail" class="active">Account Details</li>
+            </ol>
+        </div>
+        <div class="col-xs-12">
+            <p>* To change password, fill in the Password & Confirm Password with new password.</p>
+            <p>* To update profile, fill in the up-to-date details in the corresponding fields</p>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-md-8">
+            <div growl></div>
+            <form name="userForm" class="form-horizontal forms mtop20">
+                <div class="grey-border">
+                    <div class=" bg-black col-xs-12 mbtm20">
+                        <p class="white-text text-uppercase padd5"> Account details</p>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Email Address: </label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userData[0].USER_EMAIL" readonly="readonly" class="form-control" id="inputPassword3" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label class="col-sm-3 control-label">Password: </label>
+                        <div class="col-sm-9">
+                            <input type="password" name="password" class="form-control" data-ng-model="userData[0].password" ng-minlength="6" required>
+                            <div class="help-block" ng-messages="userForm.password.$error" ng-if="userForm.password.$touched">
+                                <div ng-messages-include="app/templates/messages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.confirm_password.$touched && userForm.confirm_password.$invalid }">
+                        <label class="col-sm-3 control-label">Confirm Password: </label>
+                        <div class="col-sm-9">
+                            <input type="password" name="confirm_password" class="form-control" data-ng-model="userData[0].confirm_password" ng-minlength="6" required compare-to="userData[0].password" />
+                            <div class="help-block" ng-messages="userForm.confirm_password.$error" ng-if="userForm.confirm_password.$touched">
+                                <div ng-messages-include="app/templates/messages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.firstname.$touched && userForm.firstname.$invalid }">
+                        <label class="col-sm-3 control-label">First Name: </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="firstname" class="form-control" data-ng-model="userData[0].firstname" required>
+                            <div class="help-block" ng-messages="userForm.firstname.$error" ng-if="userForm.firstname.$touched">
+                                <div ng-messages-include="app/templates/messages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.lastname.$touched && userForm.lastname.$invalid }">
+                        <label class="col-sm-3 control-label">Last Name: </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="lastname" class="form-control" data-ng-model="userData[0].lastname" required>
+                            <div class="help-block" ng-messages="userForm.lastname.$error" ng-if="userForm.lastname.$touched">
+                                <div ng-messages-include="app/templates/messages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="update & save" data-ng-click="updateAccountDetail()" ng-disabled="userForm.$invalid" class="btn btn-danger round-border no-shadow mleft0 text-uppercase mtop20" />
+            </form>
+        </div>
+    </div>
+</div>

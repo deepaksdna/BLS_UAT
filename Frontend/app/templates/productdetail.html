@@ -1,0 +1,129 @@
+﻿<div class="container padding-footer mtop30">
+    <div class="row">
+        <div class="col-xs-12">
+            <ol class="breadcrumb">
+                <li><a ui-sref="home">Home</a></li>
+                <li><a ui-sref="productTemplate1({CategoryId:category_id,BrandId:0})">{{brandName}}</a></li>
+                <li class="active">{{brandName}} {{productModel}} {{productTitle}}</li>
+            </ol>
+        </div>
+        <div class="col-sm-6 col-lg-5 col-md-6 col-xs-12">
+            <div class="col-xs-12 grey-border display-table text-center">
+                <div class="">
+                    <img data-ng-src="{{marketingimage}}" width="337" height="422" class="img-responsive">
+                </div>
+            </div>
+            <div class="col-xs-12 mtop10">
+                <div class="row">
+                    <ul class="count-prod">
+                        <li data-ng-repeat="productimage in productmarketingimages">
+                            <a data-ng-click="setimage(prodimage + productimage.image)">
+                                <img data-ng-src="{{prodimage + productimage.image}}" width="72" height="83" class="img-responsive">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-7 col-md-6 col-xs-12">
+            <div class="brand-image">
+                <img ng-src="{{ brandImage }}" class="img-responsive">
+            </div>
+            <div class="clearfix"></div>
+            <h3 class="red-text uppercase">{{brandName}}</h3>
+            <h4 class=""><span class="uppercase">{{brandName}}</span> {{productModel}} {{productTitle}}</h4>
+            <h4 class="grey-text">List Price: S${{productPrice}}</h4>
+            <h4 class="grey-text">Video Links: <a href="{{productVideoLink}}" target="_blank">{{ productVideoLink }}</a></h4>
+            <h3 class="red-text" data-ng-show="{{discountType=='D'}}">Promo Price: S${{promoPrice}}</h3>
+            <p class="grey-text">You’re entitled for a maximum of three(3) of this product.</p>
+            <p class="grey-text">The availability of the free product depends while its supply lasts. We reserve the rights to replace it with another product.</p>
+            <div class="col-xs-12">
+                <div class="row">
+                    <button class="btn btn-danger-outline nomargin pull-left no-shadow waves-effect" type="button" ng-click="decrement();"><i class="fa fa-minus"></i></button>
+                    <span class="btn-danger-span waves-effect"><span>{{count}}</span></span>
+                    <button class="btn btn-danger no-shadow nomargin waves-effect pull-left" type="button" ng-click="increment();"><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <hr />
+            <div class="form-group mtop20">
+                <div class="col-sm-6">
+                    <div class="row">
+                        <label for="exampleInputEmail1" class="uppercase">Select color</label>
+                        <select class="form-control"  data-ng-model="selectedColour" data-ng-change="selectedColourProduct(selectedColour.name)" data-ng-options="colour.name for colour in colours"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 mtop20">
+                <div class="row">
+                    <button class="btn btn-danger round-border no-shadow text-uppercase mbtm10"><i class="fa  fa-shopping-cart"></i> Add to shopping cart</button>
+                    <button type="button" class="btn btn-danger-outline no-shadow waves-effect mbtm10" data-ng-controller="wishListController" data-ng-click="addWishList()"><i class="fa fa-heart"></i> Add to wishlist</button>
+                    <div class="col-xs-12 mtop20">
+                        <div class="row">
+                            <div class="panel-group no-shadow" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading text-uppercase">
+                                        <h4 class="panel-title grey-text"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> <span class="glyphicon glyphicon-plus pull-right"></span> Item details </a> </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse">
+                                        <div class="panel-body grey-text">{{productDescription}} </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="social-buttons"> <a class="btn-floating btn-large btn-share no-shadow" type="button"><i class="fa fa-share-alt red-text"></i></a> <a class="btn-floating btn-large btn-fb no-shadow" type="button"><i class="fa fa-facebook"></i></a> <a class="btn-floating btn-large btn-info no-shadow" type="button"><i class="fa fa-twitter"></i></a> </div>
+                    <h4><strong>Total<span class="red-text"> S${{productPrice}}</span></strong></h4>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12 mtop40">
+            <div class="row">
+                <hr />
+                <div class="col-xs-12"><p class="uppercase fa-16 pull-left">Related Products</p></div>
+                <div class="clearfix"></div>
+                <div class="mtop20 col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-4 text-center mbtm40 main-prod" data-ng-repeat="related in relatedproducts">
+                            <div class="product-cat col-xs-12 col-xs-12 ">
+                                <div class="cart-icons">
+                                    <a ui-sref="FOCProductDetails({ProductId:related.PRODUCT_ID})">
+                                        <button class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                    <button class="btn btn-danger mtop10"><i class="fa fa-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                            <div class="star col-sm-2" data-ng-show="{{ related.PRODUCT_PROMOTION.OVERLAY_IMAGE.DISPLAY!=0 && related.PRODUCT_PROMOTION.APPLIED_PROMOTIONS.LIST!=null }}"> <span> {{related.PRODUCT_PROMOTION.OVERLAY_IMAGE.DISPLAY}}% </span> </div>
+                            <div class="star col-sm-2" data-ng-show="{{ related.PRODUCT_PROMOTION.OVERLAY_IMAGE.DISPLAY==null && related.PRODUCT_PROMOTION.APPLIED_PROMOTIONS.LIST!=null }}"> <span> {{related.PRODUCT_PROMOTION.OVERLAY_IMAGE.DISPLAY_TEXT}} </span> </div>
+
+                            <div class="demo-card-image wow fadeInUp">
+                                <img ng-src="{{ prodimage + related.image }}" clas class="img-responsive">
+                                <div class="mdl-card__actions">
+                                    <h1 class="white-text text-center">
+                                        {{related.PRODUCT_BRANDNAME }} {{related.PRODUCT_MODEL}}
+                                        {{related.PRODUCT_TITLE}}
+                                    </h1>
+                                    <h2 class="white-text text-center font-bold"><span data-ng-show="{{related.PROMOTIONS_DISCOUNT_TYPE=='D'}}" class="red-text line-through fa-20">S${{related.list_price}}</span> S${{related.FINAL_DISPLAY_PRICE_WITHOUT_GST}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.dropdown input, .dropdown label').click(function (e) {
+        e.stopPropagation();
+    });
+    $('.collapse').collapse()
+</script>

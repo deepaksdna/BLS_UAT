@@ -1,0 +1,47 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="animated slideInDown "> <img src="images/slider-1.jpg" class="img-responsive" alt="slider-12"></div>
+        <div class="col-xs-12"><div class="row">
+            <div class="container slider" data-ng-controller="homeController">
+                <img ng-repeat="slide in slides" class="slide slide-animation nonDraggableImage"
+                     ng-swipe-right="nextSlide()" ng-swipe-left="prevSlide()"
+                     ng-hide="!isCurrentSlideIndex($index)" ng-src="{{sliderimage + slide.image}}">
+
+                <a class="arrow prev" href="javascript:void(0)" ng-click="nextSlide()"></a>
+                <a class="arrow next" href="javascript:void(0)" ng-click="prevSlide()"></a>
+                <nav class="slider-rounds">
+                    <div class="wrapper">
+                        <ul class="dots">
+                            <li class="dot" ng-repeat="slide in slides">
+                                <a href="javascript:void(0)" ng-class="{'active':isCurrentSlideIndex($index)}"
+                                   ng-click="setCurrentSlideIndex($index);">{{slide.id}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div></div>
+    </div>
+</div>
+<div class="container padding-footer mtop30">
+    <div class="row">
+        <div class="col-sm-6 mtop20" data-ng-repeat="category in categories">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="demo-card-image cursor-pointer wow fadeInUp">
+                        <img ng-src="{{category.image_url_path}}" class="img-responsive">
+                        <div class="mdl-card__actions">
+                            <h1 class="white-text text-center" data-toggle="collapse" data-parent="#accordion" href="#collapse{{category.id}}" aria-expanded="true" aria-controls="collapseOne">{{ category.name }}</h1>
+                        </div>
+                        
+                        <div data-ng-show="category.sub_cat.length !=0" class="cate-data primary-color panel-collapse collapse" id="collapse{{category.id}}" role="tabpanel" aria-labelledby="headingOne">
+                            <ul class="subcategory white-text" data-ng-repeat="subCategory in category.sub_cat">
+                                <li><a ui-sref="productTemplate1({CategoryId:subCategory.CHILD_CATEGORY_ID,BrandId:0})">{{subCategory.name|uppercase}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

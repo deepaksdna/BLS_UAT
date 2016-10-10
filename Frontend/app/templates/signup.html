@@ -1,0 +1,143 @@
+﻿<div class="container padding-footer mtop30">
+    <div class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a ui-sref="home">Home</a></li>
+            <li ui-sref="signup" class="active">Sign Up</li>
+        </ol>
+    </div>
+    <div class="col-xs-12">
+        <div class="col-sm-8">
+            <div class="row">
+                <div growl></div>
+                <form name="userForm" class="form-horizontal forms">
+                    <div class="grey-border">
+                        <div class=" bg-black col-xs-12 mbtm20">
+                            <p class="white-text text-uppercase padd5"> please complete your details</p>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.email.$touched && userForm.email.$invalid }">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Email Address: </label>
+                            <div class="col-sm-9">
+                                <input type="email" name="email" class="form-control" data-ng-model="main.email" required>
+                                <div class="help-block" ng-messages="userForm.email.$error" ng-if="userForm.email.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                            <label class="col-sm-3 control-label">Password: </label>
+                            <div class="col-sm-9">
+                                <input type="password" name="password" class="form-control" data-ng-model="main.password" ng-minlength="6" required>
+                                <div class="help-block" ng-messages="userForm.password.$error" ng-if="userForm.password.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.confirmPassword.$touched && userForm.confirmPassword.$invalid }">
+                            <label class="col-sm-3 control-label">Confirm Password: </label>
+                            <div class="col-sm-9">
+                                <input type="password" name="confirmPassword" class="form-control" data-ng-model="main.confirmPassword" ng-minlength="6" required compare-to="main.password" />
+                                <div class="help-block" ng-messages="userForm.confirmPassword.$error" ng-if="userForm.confirmPassword.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.firstName.$touched && userForm.firstName.$invalid }">
+                            <label class="col-sm-3 control-label">First Name: </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="firstName" class="form-control" data-ng-model="main.firstName" required>
+                                <div class="help-block" ng-messages="userForm.firstName.$error" ng-if="userForm.firstName.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.lastName.$touched && userForm.lastName.$invalid }">
+                            <label class="col-sm-3 control-label">Last Name: </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="lastName" class="form-control" data-ng-model="main.lastName" required>
+                                <div class="help-block" ng-messages="userForm.lastName.$error" ng-if="userForm.lastName.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.blockNo.$touched && userForm.blockNo.$invalid }">
+                            <label class="col-sm-3 control-label">Block No.: </label>
+                            <div class="col-sm-9">
+
+                                <input type="text" name="blockNo" class="form-control" data-ng-model="main.blockNo" required>
+                                <div class="help-block" ng-messages="userForm.blockNo.$error" ng-if="userForm.blockNo.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.unitNo.$touched && userForm.unitNo.$invalid }">
+                            <label class="col-sm-3 control-label">Unit No.: </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="unitNo" class="form-control" data-ng-model="main.unitNo" required>
+                                <div class="help-block" ng-messages="userForm.unitNo.$error" ng-if="userForm.unitNo.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.street.$touched && userForm.street.$invalid }">
+                            <label class="col-sm-3 control-label">Street: </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="street" class="form-control" data-ng-model="main.street" required>
+                                <div class="help-block" ng-messages="userForm.street.$error" ng-if="userForm.street.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Country: </label>
+                            <div class="col-sm-9">
+                                <input type="text" data-ng-model="country" class="form-control" disabled placeholder="SINGAPORE">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.postalCode.$touched && userForm.postalCode.$invalid }">
+                            <label class="col-sm-3 control-label">Postal Code: </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="postalCode" class="form-control" data-ng-model="main.postalCode" ng-minlength="5" ng-maxlength="12" required>
+                                <div class="help-block" ng-messages="userForm.postalCode.$error" ng-if="userForm.postalCode.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.telephoneno.$touched && userForm.telephoneno.$invalid }">
+                            <label class="col-sm-3 control-label">Telephone No.: </label>
+                            <div class="col-sm-9">
+                                <input type="number" name="telephoneno" class="form-control" data-ng-model="main.telephoneno" ng-minlength="5" required>
+                                <div class="help-block" ng-messages="userForm.telephoneno.$error" ng-if="userForm.telephoneno.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Fax No. (optional): </label>
+                            <div class="col-sm-9">
+                                <input type="number" data-ng-model="main.fax_no" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Company Name (optional):</label>
+                            <div class="col-sm-9">
+                                <input type="text" data-ng-model="main.companyName" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': userForm.position.$touched && userForm.position.$invalid }">
+                            <label class="col-sm-3 control-label">Position: </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="position" class="form-control" data-ng-model="main.position" ng-minlength="5" required>
+                                <div class="help-block" ng-messages="userForm.position.$error" ng-if="userForm.position.$touched">
+                                    <div ng-messages-include="app/templates/messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="Sign up" ng-disabled="userForm.$invalid" data-ng-click="register()" class="btn btn-danger round-border no-shadow text-uppercase mtop20" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

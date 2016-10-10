@@ -1,0 +1,174 @@
+﻿<!--<div class="container" data-ng-controller="productCtrl">
+    <div class="col-sm-12 mtop10">
+        <div class="row">
+            <div class="col-sm-7 col-md-8  col-xs-12">
+                <div class="col-sm-1"><p class="mtop5">Brands:</p> </div>
+                <div class="col-sm-11">
+                    <div class="carousel slide" id="myCarousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <ul class="thumbnails">
+                                    <li class="col-sm-3" data-ng-repeat="brand in brands">
+                                        <div class="fff">
+                                            <div class="thumbnails">
+                                            </div>
+                                            <div>
+                                                <div class="caption">
+                                                    <a ui-sref="productTemplate{{brand.templateId}}({CategoryId:CategoryId,BrandId:brand.id})">
+                                                        <h6>{{brand.name}}</h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <ul class="control-box pager round-border">
+                                <li><a data-slide="prev" href="#myCarousel" class="pre"><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+                                <li><a data-slide="next" href="#myCarousel" class="next"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5 col-md-4 col-xs-12 pull-right ">
+                <div class="row">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="disabledSelect" class="col-sm-4 control-label"><div class="row">Sort by price:</div></label>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <select class="form-control">
+                                        <option>High to Low</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 mtop20 grey-border wow fadeInUp" id="template3" data-ng-repeat="product in brandproducts">
+        <div class="row">
+            <div class="col-sm-4 text-center display-table">
+                <div class="min-height">
+                    <div class="star col-sm-2"> <span> 20% </span> </div>
+                    <img ng-src="{{ brandprod_img + product.image }}" class="img-responsive">
+                </div>
+            </div>
+            <div class="col-sm-8 grey-border-left">
+                <div class="row">
+                    <div class="bg-info col-sm-12 col-xs-12 template-3">
+                        <h2 class="white-text">{{ product.PRODUCT_BRANDNAME }} {{product.PRODUCT_MODEL}} {{product.PRODUCT_TITLE}}</h2>
+                        <h2 class="white-text font-bold"><span class="red-text line-through fa-20">S$3.00</span> S$2.70</h2>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 bg-light-grey minheight250">
+                        <p class="black-text">Brand:  {{ product.PRODUCT_BRANDNAME }},</p>
+                        <p class="black-text">
+                            Unit: {{product.PRODUCT_UOM}},
+                            Size: {{product.PRODUCT_SIZE}} colours,
+                        </p>
+                        <p class="black-text">Weight: {{product.PRODUCT_WEIGHT}},</p>
+                        <p class="black-text"> Description: {{product.PRODUCT_DESC}} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+
+<div class="container-fluid mtop10">
+    <div class="row">
+        <div class="animated slideInDown ">
+            <img ng-src="{{ cat_img }}" class="img-responsive">
+        </div>
+    </div>
+</div>
+<div class="container padding-footer mtop30">
+    <div class="col-xs-12 mtop10">
+        <div class="row">
+            <div class="col-sm-6 col-lg-7 col-xs-12">
+                <div class="col-sm-1 col-xs-2"><div class="row"><p class="mtop5"> Brands: </p> </div></div>
+                <div class="col-sm-11 col-xs-10">
+                    <div class="carousel slide sort-width" id="myCarousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <ul class="thumbnails">
+                                    <!--<li class="col-sm-3" data-ng-repeat="brand in brands1|limitTo:limitToValue">-->
+                                    <li class="col-sm-3" data-ng-repeat="brand in brands|  startFrom:currentPage*pageSize | limitTo:pageSize">
+                                        <div class="fff">
+                                            <div class="thumbnails">
+                                            </div>
+                                            <div>
+                                                <div class="caption">
+                                                    <a ui-sref="productTemplate{{brand.templateId}}({CategoryId:CategoryId,BrandId:brand.id})">
+                                                        <h6>{{brand.name}}</h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <ul class="control-box pager round-border">
+                                <li><a data-slide="prev" class="pre"><i class="glyphicon glyphicon-chevron-left" data-ng-click="Previous()"></i></a></li>
+                                <li><a data-slide="next" class="next"><i class="glyphicon glyphicon-chevron-right" data-ng-click="Next()"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 col-xs-12 pull-right ">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <ul class="price-filter text-right">
+                            <li>Sort by:</li>
+                            <li><a href="javascript:void(0)">Price <span aria-hidden="true" class="glyphicon glyphicon-chevron-up" data-ng-click="sortByPrice(false)" ng-show="sortDesc"></span><span aria-hidden="true" class="glyphicon glyphicon-chevron-down" ng-show="!sortDesc" data-ng-click="sortByPrice(true)"></span></a></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 mtop20 grey-border wow fadeInUp" id="template3" data-ng-repeat="product in brandproducts">
+        <div class="row">
+            <div class="col-sm-4 text-center display-table">
+                <div class="min-height">
+                    <div class="nostock col-xs-12 col-xs-12 " ng-show="{{product.PRODUCT_STATUS=='Y'}}">
+                        <h2 class="text-uppercase padd10">out of stock</h2>
+                    </div>
+                    <div class="star col-sm-2" data-ng-show="{{ product.PRODUCT_PROMOTION.OVERLAY_IMAGE.DISPLAY!=0 && product.PRODUCT_PROMOTION.APPLIED_PROMOTIONS.LIST!=null }}"> <span> {{product.PRODUCT_PROMOTION.OVERLAY_IMAGE.DISPLAY}}% </span> </div>
+                    <div class="star col-sm-2" data-ng-show="{{ product.PRODUCT_PROMOTION.OVERLAY_IMAGE.DISPLAY==null && product.PRODUCT_PROMOTION.APPLIED_PROMOTIONS.LIST!=null }}"> <span> {{product.PRODUCT_PROMOTION.OVERLAY_IMAGE.DISPLAY_TEXT}} </span> </div>
+                    <img ng-src="{{ brandprod_img + product.image }}" class="img-responsive">
+                </div>
+            </div>
+            <div class="col-sm-8 grey-border-left">
+                <div class="row">
+                    <div class="bg-info col-xs-12 col-xs-12 template-3">
+                        <h2 class="white-text">{{ product.PRODUCT_BRANDNAME }} {{product.PRODUCT_MODEL}} {{product.PRODUCT_TITLE}}</h2>
+                        <h2 class="white-text text-center font-bold"><span data-ng-show="{{product.PRODUCT_DISCOUNT_TYPE=='D'}}" class="red-text line-through fa-20">S${{product.list_price}}</span> S${{product.FINAL_DISPLAY_PRICE_WITHOUT_GST}}</h2>
+                    </div>
+                    <div class="col-xs-12 col-xs-12 bg-light-grey minheight250">
+                        <p class="black-text">Brand:  {{ product.PRODUCT_BRANDNAME }},</p>
+                        <p class="black-text">
+                            Unit: {{product.PRODUCT_UOM}},
+                            Size: {{product.PRODUCT_SIZE}},
+                        </p>
+                        <p class="black-text">Weight: {{product.PRODUCT_WEIGHT}},</p>
+                        <p class="black-text"> Description: {{product.PRODUCT_DESC}} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

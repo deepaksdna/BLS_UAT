@@ -1,0 +1,200 @@
+﻿<div class="container padding-footer mtop30">
+    <div class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a ui-sref="home">Home</a></li>
+            <li ui-sref="contact" class="active">Contact</li>
+        </ol>
+    </div>
+    <div class="col-xs-12 ">
+        <p> <strong>Locate Us</strong></p>
+        <p>Our sales executive are here to assist you Monday through Friday from 8:00 am to 5:45 pm. </p>
+        <p><strong>MAIN OFFICE</strong></p>
+        <p>No. 2 Tuas Avenue 1 Singapore 639487</p>
+        <p> Tel: 65 6862 8866 (30 lines) </p>
+        <p>Fax: 65 6862 4455 (2 lines) </p>
+        <p>Operating Hours: 8:00 - 5:45pm (Mon-Fri) </p>
+        <p>Email: enquiry@alfax.com.sg </p>
+        <div class="col-xs-12 mtop10">
+            <div class="row">
+                <div class="grey-border"><img src="images/map.jpg" class="img-responsive"></div>
+                <div class="col-xs-12 mtop10">
+                    <div class="row">
+                        <div class="col-sm-4 mtop10">
+                            <div class="row">
+                                <p><strong>Branch</strong></p>
+                                <p>Blk 50 #01-21</p>
+                                <p> Frontier Ubi Avenue 3</p>
+                                <p> Singapore 408866 </p>
+                                <p>Tel: 65 6749 6192/6749 6760 </p>
+                                <p>Fax: 65 67496463 </p>
+                                <p>Operating Hours: </p>
+                                <p>8:30am - 5:30pm (Mon-Fri) </p>
+                                <p>8:30am - 12:30pm (Sat)</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mtop10">
+                            <div class="row">
+                                <p>&nbsp;</p>
+                                <p>Blk 1 Pioneer Road North #01-11</p>
+                                <p> Singapore 628455 </p>
+                                <p>Tel: 65 62658866</p>
+                                <p> Fax: 65 6265t 4455 </p>
+                                <p>Operating Hours:</p>
+                                <p> 8:30am - 5:30pm (Mon-Fri)</p>
+                                <p> 8:30am - 12:30pm (Sat)</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mtop10">
+                            <div class="row">
+                                <p>Blk 221 Boon Lay Place #01-210</p>
+                                <p>Singapore 640221</p>
+                                <p> Tel: 65 6261 3147/6261 3148 </p>
+                                <p>Fax: 65 6265 0852</p>
+                                <p>
+                                    Operating Hours:
+                                    10:00am - 9:30pm (Mon-Sun)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <p class="fa-13 black-text mtop20">Please contact us if you have any questions on ordering or any of our products. Please fill in the form below to send us your feedback by email. </p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-9 col-md-8 mtop10">
+                    <div class="row">
+                        <div growl></div>
+                        <form name="userForm" novalidate class="form-horizontal forms mtop20">
+                            <div class="form-group" ng-class="{ 'has-error': userForm.name.$touched && userForm.name.$invalid }">
+                                <label class="col-sm-3 nopadding control-label">Name: </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <input type="text" name="name" class="form-control" data-ng-model="main.name" required>
+                                        <div class="help-block" ng-messages="userForm.name.$error" ng-if="userForm.name.$touched">
+                                            <div ng-messages-include="app/templates/messages.html"></div>
+                                            <!--<p ng-message="minlength">Your name is too short.</p>
+                                            <p ng-message="maxlength">Your name is too long.</p>
+                                            <p ng-message="required">Your name is required.</p>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': userForm.email.$touched && userForm.email.$invalid }">
+                                <label class="col-sm-3 nopadding control-label">Email: </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <input type="email" name="email" class="form-control" data-ng-model="main.email"  required>
+                                        <div class="help-block" ng-messages="userForm.email.$error" ng-if="userForm.email.$touched">
+                                            <div ng-messages-include="app/templates/messages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': userForm.blockNo.$touched && userForm.blockNo.$invalid }">
+                                <label class="col-sm-3 nopadding control-label">Block No.: </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <input type="text" name="blockNo" class="form-control" data-ng-model="main.blockNo"  required>
+                                        <div class="help-block" ng-messages="userForm.blockNo.$error" ng-if="userForm.blockNo.$touched">
+                                            <div ng-messages-include="app/templates/messages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': userForm.unitNo.$touched && userForm.unitNo.$invalid }">
+                                <label class="col-sm-3 nopadding control-label">Unit No.: </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <input type="text" name="unitNo" class="form-control" data-ng-model="main.unitNo"  required>
+                                        <div class="help-block" ng-messages="userForm.unitNo.$error" ng-if="userForm.unitNo.$touched">
+                                            <div ng-messages-include="app/templates/messages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': userForm.street.$touched && userForm.street.$invalid }">
+                                <label class="col-sm-3 nopadding control-label">Street: </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <input type="text" name="street" class="form-control" data-ng-model="main.street"  required>
+                                        <div class="help-block" ng-messages="userForm.street.$error" ng-if="userForm.street.$touched">
+                                            <div ng-messages-include="app/templates/messages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 nopadding control-label">Country: </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <input type="text" data-ng-model="country" class="form-control" disabled placeholder="SINGAPORE">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': userForm.postal_code.$touched && userForm.postal_code.$invalid }">
+                                <label class="col-sm-3 nopadding control-label">Postal Code: </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <input type="text" name="postal_code" class="form-control" data-ng-model="main.postal_code" ng-minlength="5" ng-maxlength="12" required>
+                                        <div class="help-block" ng-messages="userForm.postal_code.$error" ng-if="userForm.postal_code.$touched">
+                                            <div ng-messages-include="app/templates/messages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': userForm.telephone_no.$touched && userForm.telephone_no.$invalid }">
+                                <label class="col-sm-3 nopadding control-label">Telephone No.: </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <input type="number" name="telephone_no" class="form-control" data-ng-model="main.telephone_no" ng-minlength="5" required>
+                                        <div class="help-block" ng-messages="userForm.telephone_no.$error" ng-if="userForm.telephone_no.$touched">
+                                            <div ng-messages-include="app/templates/messages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 nopadding control-label">Fax No. (optional): </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <input type="number" data-ng-model="main.fax_no" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': userForm.website.$touched && userForm.website.$invalid }">
+                                <label class="col-sm-3 nopadding control-label">Website: </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <input type="url" name="website" class="form-control" data-ng-model="main.website" required>
+                                        <div class="help-block" ng-messages="userForm.website.$error" ng-if="userForm.website.$touched">
+                                            <div ng-messages-include="app/templates/messages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': userForm.yourmessage.$touched && userForm.yourmessage.$invalid }">
+                                <label for="inputPassword3" class="col-sm-3 nopadding control-label">Your message:</label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <textarea name="yourmessage" cols="" rows="6" class="form-control" data-ng-model="main.yourmessage" required>></textarea>
+                                        <div class="help-block" ng-messages="userForm.yourmessage.$error" ng-if="userForm.yourmessage.$touched">
+                                            <div ng-messages-include="app/templates/messages.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-3 nopadding control-label">&nbsp;</label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <!--<button  data-ng-click="contact()" class="btn btn-danger round-border no-shadow mleft0 text-uppercase" ng-minlength="5" ng-maxlength="20">Submit</button>-->
+                                        <input type="submit" value="Submit" ng-disabled="userForm.$invalid" data-ng-click="contact()" class="btn btn-danger round-border no-shadow mleft0 text-uppercase" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

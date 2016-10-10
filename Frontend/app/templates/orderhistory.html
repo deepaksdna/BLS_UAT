@@ -1,0 +1,37 @@
+﻿<div class="container padding-footer mtop30">
+    <div class="row">
+        <div class="col-xs-12">
+            <ol class="breadcrumb">
+                <li><a ui-sref="home">Home</a></li>
+                <li ui-sref="orderhistory" class="active">Order History</li>
+            </ol>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-8">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="bg-black white-text">
+                        <tr>
+                            <th>#</th>
+                            <th>Order Date</th>
+                            <th>Order ID</th>
+                            <th>Order Total</th>
+                            <th>Order Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="order in orderData">
+                            <th scope="row">1</th>
+                            <td>{{order.PRODUCT_CREATED}}</td>
+                            <td>{{order.Order_id}}</td>
+                            <td>{{order.total}}</td>
+                            <td>{{order.status}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <button class="btn btn-danger round-border no-shadow mleft0 text-uppercase">Update & save</button>
+        </div>
+    </div>
+</div>

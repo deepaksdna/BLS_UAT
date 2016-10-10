@@ -1,0 +1,129 @@
+﻿
+<div class="container padding-footer mtop30">
+  <div class="row">
+    <div class="col-xs-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Cart</li>
+      </ol>
+    </div>
+<div class="container" data-ng-controller="cartCtrl">	
+    <div class="col-xs-12 mtop10" data-ng-repeat="cart_product in cart_products">
+      <div class="col-sm-2"> 
+	  
+	  <img data-ng-src="{{cart_product.IMGPATH}}" width="337" height="422" class="img-responsive">
+	  </div>
+      <div class="col-sm-10">
+        <div class="row">
+          <div class="col-xs-12 bg-black">
+            <div class="row">
+              <div class="col-xs-10">
+                <h2 class=" white-text"><span class="text-uppercase">{{cart_product.product.products_attr.brand.name}}</span>
+				</h2>
+              </div>
+              <div class="col-xs-2">
+                <div class="row">
+               <!--    <div class="cart-close"><a href="#"> × </a></div> -->
+                  <div class="cart-close" ng-click="removeFromCart(cart_product.prod_id)" > × </a></div>
+				     
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="row">
+              <div class="col-sm-8">
+                <h2 class="red-text">{{cart_product.product.title}} {{cart_product.product.products_attr.model}} {{cart_product.product.products_attr.uom}}
+
+				
+				</h2>
+                <h5><strong>S${{cart_product.final_prices.final_item_price}}</strong></h5>
+              </div>
+              <div class="col-sm-2 pull-right text-right">
+                <div class="row">
+                  <div class="btn btn-danger round-border no-shadow mleft0 mright0 text-uppercase mtop10">S${{cart_product.final_prices.final_price}}</div>
+                </div>
+              </div>
+			  
+              <div class="col-xs-12">
+                <p>{{cart_product.product.product_desc}}</p>
+                 <div ng-show="{{cart_product.product.promotions.discount_type=='P'}}"  class="col-xs-12">
+                  <div class="row">
+                    <div class="sm-image">
+                       <img  data-ng-src="{{cart_product.CHILDIMGPATH}}" class="img-responsive">
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12">
+                          <div class="row">
+                            <h6>Quantity:{{cart_product.product.promotions.quantity_child}}</h6>
+                          </div>
+                     </div>
+                    </div>
+					 </div >
+					<div class="prod-ytext" style="font-size: 13px; color: #d82626;">{{cart_product.product.promotions.formal_message_display}}</div>
+					
+                    <div class="col-xs-12">
+                      <div class="row">
+                       <!--  <div class="col-sm-4 col-xs-5">
+                          <div class="row">
+                            <h6 class="text-uppercase"><strong>BLACK</strong></h6>
+                          </div>
+                        </div> -->
+                        <div class="col-sm-4 col-xs-7 pull-right">
+                          
+		<button class="btn btn-danger-outline nomargin pull-left no-shadow waves-effect" ng-click="Decrease(cart_product.prod_quantity,cart_product.prod_id)"  type="button"><i class="fa fa-minus"></i></button>
+                          
+						  <span class=" btn-danger-span waves-effect"><span>{{cart_product.prod_quantity}}</span></span>
+						  
+        <button class="btn btn-danger no-shadow nomargin waves-effect pull-left"  ng-click="Increase(cart_product.prod_quantity,cart_product.prod_id)"  type="button"><i class="fa fa-plus"></i></button>
+                        </div>
+                      </div>
+                    
+                  
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    
+    <div class="clearfix"></div>
+    <div class="col-sm-6 text-right pull-right mtop40" >
+      <div class="row">
+        <div class="col-xs-8 mtop10">
+          <p class="fa-16">Subtotal(Without GST):</p>
+        </div>
+        <div class="col-xs-4 text-right mtop10">
+          <p class="fa-16">S${{grandPrices.grandTotalPriceWithOutGST}} </p>
+        </div>
+        <div class="col-xs-8">
+          <p class="fa-16">GST {{grandPrices.GstRate}}%:</p>
+        </div>
+        <div class="col-xs-4 text-right">
+          <p class="fa-16">S${{grandPrices.calucatedGST}} </p>
+        </div>
+        <div class="col-xs-8">
+          <p class="fa-16">Delivery Fee:</p>
+        </div>
+        <div class="col-xs-4 text-right">
+          <p class="red-text fa-16">{{grandPrices.DeliveryCharge}}</p>
+        </div>
+        <div class="col-xs-12">
+          <p class="fa-18 text-right"><b>Total : <span class="red-text text-uppercase">S${{grandPrices.grandTotalPriceWithGstAndDelivery}}</span></b></p>
+        </div>
+        <div class="col-xs-12">
+        <button class="btn btn-danger-outline round-border no-shadow mleft0 mright0 text-uppercase mtop10">Back to shopping</button>
+        <button class="btn btn-danger round-border no-shadow mleft0 mright0 text-uppercase mtop10"><a ui-sref="checkout" class="grey-text">Proceed to checkout</a></button>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 mtop20">
+     <img src="images/get-me-free.jpg" class="img-responsive">
+    </div>
+   </div>
+ </div>
+</div>

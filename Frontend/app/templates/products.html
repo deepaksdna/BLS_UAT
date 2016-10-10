@@ -1,0 +1,90 @@
+﻿<div class="clearfix"></div>
+<div class="container-fluid mtop10">
+    <div class="row">
+        <div class="animated slideInDown" data-ng-controller="productCtrl">
+            <img ng-src="{{ cat_img }}" class="img-responsive">
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="container" data-ng-controller="productCtrl">
+    <div class="col-sm-12 mtop10">
+        <div class="row">
+            <div class="col-sm-6 col-lg-7 col-xs-12">
+                <div class="col-sm-1"><p class="mtop5">Brands:</p> </div>
+                <div class="col-sm-11">
+                    <div class="carousel slide" id="myCarousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <ul class="thumbnails">
+                                    <li class="col-sm-3" data-ng-repeat="brand in brands">
+                                        <div class="fff">
+                                            <div class="thumbnails">
+                                            </div>
+                                            <div>
+                                                <div class="caption">
+                                                    <a ui-sref="productTemplate{{brand.templateId}}({CategoryId:CategoryId,BrandId:brand.id})">
+                                                        <h6>{{brand.name}}</h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <ul class="control-box pager round-border">
+                                <li><a data-slide="prev" href="#myCarousel" class="pre"><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+                                <li><a data-slide="next" href="#myCarousel" class="next"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 col-xs-12 pull-right ">
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+                        <label for="disabledSelect" class="col-sm-4 control-label">Sort by price:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control">
+                                <option>High to Low</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 mtop20">
+        <div class="row">
+            <div class="col-sm-4 text-center mbtm20 main-prod" data-ng-repeat="product in products">
+                <div class="product-cat col-sm-12 col-xs-12 ">
+                    <a ui-sref="FOCProductDetails({ProductId:product.PRODUCT_ID})">
+                        <button class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </a>
+                    <div class="clearfix"></div>
+                    <button class="btn btn-danger mtop10"><i class="fa fa-shopping-cart"></i></button>
+                </div>
+                <div class="star col-sm-2"> <span> 20% </span> </div>
+                <div class="demo-card-image wow fadeInUp">
+                    <img ng-src="{{ prod_img + product.image }}" class="img-responsive">
+                    <div class="mdl-card__actions">
+                        <h1 class="white-text text-center">
+                           {{ product.PRODUCT_BRANDNAME }} {{product.PRODUCT_MODEL}} 
+                          {{product.PRODUCT_TITLE}}
+                        </h1>
+                        <h2 class="white-text text-center font-bold "><span class="red-text line-through fa-20">S$3.00</span> S {{product.sale_price}}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.carousel').carousel({
+            interval: 3000
+        })
+ });</script>

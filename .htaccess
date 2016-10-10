@@ -1,0 +1,8 @@
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag html_errors on
+
+<IfModule mod_php5.c>
+    php_extension_dir php_intl.dll
+    php_extension php_intl.dll
+</IfModule>

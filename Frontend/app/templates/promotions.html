@@ -1,0 +1,29 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="animated slideInDown">
+            <img src="images/BLS_15-PromotionsValuesPlus.jpg" class="img-responsive" alt="slider-12">
+            <div class="promo-value"> {{ name }} </div>
+        </div>
+    </div>
+</div>
+<div class="container mtop30 mbtm40 padding-footer">
+    <div class="row">
+        <div class="col-sm-6 mtop20" data-ng-repeat="promoValue in promoValues">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="demo-card-image cursor-pointer wow fadeInUp" data-toggle="collapse">
+                        <img ng-src="{{promoValue.parent_cat_image_url_path}}" class="img-responsive">
+                        <div class="mdl-card__actions">
+                            <h1 class="white-text text-center" data-toggle="collapse" data-parent="#accordion" href="#collapse{{promoValue.id}}" aria-expanded="true" aria-controls="collapseOne">{{ promoValue.PARENT_NAME }}</h1>
+                        </div>
+                        <div data-ng-show="category.sub_cat.length !=0" class="col-sm-12 primary-color panel-collapse collapse" id="collapse{{promoValue.id}}" role="tabpanel" aria-labelledby="headingOne">
+                            <ul class="subcategory white-text" data-ng-repeat="subCategory in promoValue.sub_cat">
+                                <li><a ui-sref="productTemplate1({CategoryId:subCategory.CHILD_CATEGORY_ID,BrandId:0})">{{subCategory.name|uppercase}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

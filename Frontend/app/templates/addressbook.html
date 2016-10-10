@@ -1,0 +1,145 @@
+﻿<div class="container padding-footer mtop30">
+    <div class="row">
+        <div class="col-xs-12">
+            <ol class="breadcrumb">
+                <li><a ui-sref="home">Home</a></li>
+                <li ui-sref="addressbook" class="active">Address book</li>
+            </ol>
+        </div>
+        <div class="col-xs-12">
+            <p>* To update billing address & delivery address, fill in the up-to-date details in the corresponding fields.</p>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-6 mtop20">
+            <div growl></div>
+            <form name="userForm" class="form-horizontal forms">
+                <div class="grey-border">
+                    <div class=" bg-black col-xs-12 mbtm20">
+                        <p class="white-text text-uppercase padd5">Billing Address</p>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Sender Name:</label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_BILLING_SENDERNAME" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label class="col-sm-3 control-label">Contact no:</label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_BILLING_CONTACT_NO" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Fax no.(optional):</label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_BILLING_FAXNO" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label class="col-sm-3 control-label">Email Address: </label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_BILLING_EMAIL" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label class="col-sm-3 control-label">Street: </label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_BILLING_STREET_NAME" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label class="col-sm-3 control-label">Appartment/Unit No.: </label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_BILLING_UNIT_NO" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label class="col-sm-3 control-label">Postal Code: </label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_BILLING_POSTAL_CODE" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Country: </label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_BILLING_COUNTRY" class="form-control" disabled placeholder="SINGAPORE">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9">
+                            <input type="checkbox" id="checkbox1">
+                            <label for="checkbox1">Apply to delivery address</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-6 mtop20">
+            <form name="userForm" class="form-horizontal forms">
+                <div class="grey-border">
+                    <div class=" bg-black col-xs-12 mbtm20">
+                        <p class="white-text text-uppercase padd5">Delivery Address</p>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Receiver Name:</label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_SHIPPING_RECEIVER_NAME" class=" form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label class="col-sm-3 control-label">Contact No:</label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_SHIPPING_CONTACT_NO" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Fax no:</label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_SHIPPING_FAX_NO" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Email Address: </label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_SHIPPING_EMAIL" readonly="readonly" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Address: </label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_SHIPPING_ADDRESS" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label class="col-sm-3 control-label">Unit No.: </label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_SHIPPING_UNITNO" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': userForm.password.$touched && userForm.password.$invalid }">
+                        <label class="col-sm-3 control-label">Postal Code: </label>
+                        <div class="col-sm-9">
+                            <input type="text" data-ng-model="userAddressData[0].USER_SHIPPING_POSTAL_CODE" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Country: </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" data-ng-model="userAddressData[0].USER_SHIPPING_COUNTRY" disabled placeholder="SINGAPORE">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9"> </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12 mtop10">
+            <input type="submit" value="update and save" data-ng-click="updateAddressBookDetail()" ng-disabled="userForm.$invalid" class="btn btn-danger round-border no-shadow mleft0 text-uppercase" />
+        </div>
+    </div>
+</div>

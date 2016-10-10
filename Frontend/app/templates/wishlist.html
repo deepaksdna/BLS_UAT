@@ -1,0 +1,67 @@
+﻿<div class="container padding-footer mtop30">
+    <div class="row">
+        <div class="col-xs-12">
+            <ol class="breadcrumb">
+                <li><a ui-sref="home">Home</a></li>
+                <li class="active" ui-sref="wishlist">Wishlist</li>
+            </ol>
+        </div>
+        <div class="col-xs-12 mtop10 wow fadeInUp" data-ng-repeat="wishList in WishListData">
+            <div class="col-sm-2">
+                <img ng-src="{{ prod_img + wishList.image }}" class="img-responsive">
+            </div>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-xs-12 bg-black">
+                        <div class="row">
+                            <div class="col-xs-10"> <h2 class=" white-text"><span class="text-uppercase"> {{wishList.PRODUCT_BRANDNAME }} </span> {{wishList.PRODUCT_MODEL}} {{wishList.PRODUCT_TITLE}}</h2></div>
+                            <div class="col-xs-2"><div class="row"><div class="cart-close"><a href="#"> × </a></div></div></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h2 class="red-text">{{wishList.PRODUCT_BRANDNAME }} {{wishList.PRODUCT_MODEL}} {{wishList.PRODUCT_TITLE}} (FOC promo)</h2>
+                                <h6>S${{wishList.list_price}}</h6>
+                            </div>
+                            <div class="col-xs-12">
+                                <p>{{wishList.PRODUCT_DESC}}</p>
+                                <!--<div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-sm-6 display-table cartimg">
+                                            <div class="row">
+                                                <div class="sm-image">
+                                                    <img ng-src="{{ prod_img + wishList.image }}" class="img-responsive">
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="col-xs-12">
+                                                    <div class="row">
+                                                        <h6>Quantity:1</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="col-xs-12 mbtm10">
+                                            <div class="row">
+                                                <div class="col-sm-4 col-xs-3">  <div class="row"><h6 class="text-uppercase">BLACK</h6></div></div>
+                                                <div class="col-sm-8 col-xs-9 text-right">
+                                                    <div class="row">
+                                                        <button class="btn btn-danger round-border no-shadow text-uppercase"><i class="fa  fa-shopping-cart "></i> Add to shopping cart</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
