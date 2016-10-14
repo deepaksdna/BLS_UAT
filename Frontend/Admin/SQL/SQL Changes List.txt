@@ -1,0 +1,45 @@
+========================================================================================
+Changes by Deepak 19:02 12-10-2016
+ALTER TABLE `user_details` CHANGE `position` `position` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `user_addresses` CHANGE `fax_no` `fax_no` INT(11) NULL;
+ALTER TABLE `user_addresses` ADD `receiver_name` VARCHAR(200) NOT NULL AFTER `user_id`;
+ALTER TABLE `user_billings` CHANGE `fax_no` `fax_no` VARCHAR(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE `user_billings` CHANGE `block_no` `block_no` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `user_billings` ADD `city` VARCHAR(255) NOT NULL AFTER `sender_name`;
+ALTER TABLE `user_billings` ADD `state` VARCHAR(255) NOT NULL AFTER `city`;
+ALTER TABLE `user_billings` CHANGE `city` `city` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `user_billings` CHANGE `state` `state` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+
+
+
+Status By Mukesh : Done 18:33 12-10-2016
+========================================================================================
+
+========================================================================================
+Changes by Mukesh 18:33 12-10-2016
+ALTER TABLE `orders_billings` ADD `sender_name` VARCHAR(255) NOT NULL AFTER `order_id`;
+ALTER TABLE `orders_shippings` ADD `receiver_name` VARCHAR(255) NOT NULL AFTER `user_id`;
+ALTER TABLE `orders_products` DROP `final_price`;
+ALTER TABLE `orders` DROP `user_addresses_id`;
+Status By Deepak:  16:57 13-10-2016
+========================================================================================
+Changes by Mukesh 11:27 13-10-2016
+ALTER TABLE `orders_billings` CHANGE `street_address` `street` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+Status By Deepak:  DONE 17:01 13-10-2016
+========================================================================================
+
+========================================================================================
+Changes by Deepak 17:02 13-10-2016
+ALTER TABLE `user_billings` ADD `company` VARCHAR(100) NOT NULL AFTER `street`, ADD `position` VARCHAR(100) NOT NULL AFTER `company`;
+
+ALTER TABLE `user_addresses` ADD `shipping_email` VARCHAR(11) NOT NULL AFTER `receiver_name`;
+
+ALTER TABLE `user_addresses` CHANGE `city` `city` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+Status By mukesh:  
+========================================================================================
+
+
+Error: SQLSTATE[23000]: Integrity constraint violation: 1048 cannot be null 
+

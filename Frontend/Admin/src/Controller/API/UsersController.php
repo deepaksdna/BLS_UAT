@@ -211,7 +211,7 @@ class UsersController extends AppController
 			}
 
 			$Users = TableRegistry::get('Users');
-			$UserDetails = TableRegistry::get('UserDetails');
+			$UserDetails = TableRegistry::get('UserBillings');
 
 			
 
@@ -222,14 +222,15 @@ class UsersController extends AppController
 			
 			//echo $user_id;
 			
-			$current_user_details = $UserDetails->find('all', ['conditions'=>['UserDetails.user_id'=>$user_id]]);	
-			$userInfo = $current_user_details->first();
+			$current_user_details = $UserDetails->find('all', ['conditions'=>['UserBillings.user_id'=>$user_id]]);	
+			$userInfo = $current_user_details->first();			
+
 			
 			$userInfo->firstname=$firstname;
 			$userInfo->lastname=$lastname;
 				
 			$UserDetails->save($userInfo); //save/update users details table.
-
+			
 			
 			
 			$userInfoDisplay = array();
@@ -817,6 +818,8 @@ class UsersController extends AppController
 			$blockno=@$_REQUEST['blockno'];
 			$unitno=@$_REQUEST['unitno'];
 			$street=@$_REQUEST['street'];
+			$city=@$_REQUEST['city'];
+			$state=@$_REQUEST['state'];
 			$country='Singapore';
 			$postalcode=@$_REQUEST['postalcode'];
 			$telephoneno=@$_REQUEST['telephoneno'];
@@ -915,15 +918,24 @@ class UsersController extends AppController
 		if ($this->Users->save($user)) {
 
 			//print_r($user->id);
-			$userAddress = TableRegistry::get('UserAddresses');
+			//	$userAddress = TableRegistry::get('UserAddresses');
+
+			$userNewBillingAddress = TableRegistry::get('UserBillings');
 			$UserDetails = TableRegistry::get('UserDetails');
 
-			$user_address = $userAddress->newEntity();
-			
-			
+			$user_address = $userNewBillingAddress->newEntity();
 			$user_address->user_id = $user->id;
-			$user_address->street_address = $street;
-			//$user_address->country = $country;
+			$user_address->street = $street;
+			$user_address->city = $city;
+			$user_address->state = $state;
+			$user_address->firstname = $fname;
+			$user_address->lastname = $lname;
+			$user_address->email_address = $email;
+			$user_address->sender_name = $fname.' '.$lname;
+			$user_address->unit_no = $unitno;
+			$user_address->block_no = $blockno;
+			$user_address->company = $compname;
+			$user_address->position = $position;
 			$user_address->country = 'Singapore';
 			$user_address->postalcode = $postalcode;
 			$user_address->telephone = $telephoneno;
@@ -931,23 +943,26 @@ class UsersController extends AppController
 
 			
 
-			if ($userAddress->save($user_address)) {		
+			if ($userNewBillingAddress->save($user_address)) {		
 				$userAddress_lastid = $user_address->id;
 			}
 
+		 
 			$User_details = $UserDetails->newEntity();
 
 			$User_details->user_id = $user->id;
+
 			$User_details->firstname = $fname;
 			$User_details->lastname = $lname;
-			$User_details->blockno = $blockno;
-			$User_details->unitno = $unitno;
+			//$User_details->blockno = $blockno;
+			//$User_details->unitno = $unitno;
 			$User_details->company = $compname;
 			$User_details->position = $position;
-
+			
 			if ($UserDetails->save($User_details)) {		
 				//$User_details_lastid = $UserDetails->getLastInsertID();
 			}
+			
 
 			//SEND EMAIL...............................
 			//http://book.cakephp.org/3.0/en/core-libraries/email.html
@@ -1045,26 +1060,32 @@ class UsersController extends AppController
 				Usr.id as USER_ID,
 				Usr.email as USER_EMAIL,
 				Usr.status as USER_STATUS,
-				UsrAddress.street_address as STREET_ADDRESS,
+				UsrAddress.street as STREET_ADDRESS,
+				UsrAddress.firstname as USER_FIRST_NAME,
+				UsrAddress.lastname as USER_LAST_NAME,
 				UsrAddress.city as CITY,
 				UsrAddress.state as STATE,
 				UsrAddress.country as COUNTRY,
 				UsrAddress.postalcode as POSTAL_CODE,
 				UsrAddress.telephone as TELEPHONE,
-				UsrAddress.fax_no as FAX_NO,
-				UsrDetails.*
+				UsrAddress.fax_no as FAX_NO
 			FROM 
 				`users` as Usr
-				LEFT JOIN user_addresses as UsrAddress ON (UsrAddress.user_id = Usr.id)
+				LEFT JOIN user_billings as UsrAddress ON (UsrAddress.user_id = Usr.id)
 				LEFT JOIN user_details as UsrDetails ON (UsrDetails.user_id = Usr.id)
 			WHERE 
 				Usr.id=".$login_user_id."
 			";
+
+		
 			if($user_id!=null)
 			$userDetails = $connection->execute($sql)->fetchAll('assoc');
 			else
-			$userDetails=array();
-
+			$userDetails=array();	
+			$userDetails[0]['firstname']=@$userDetails[0]['USER_FIRST_NAME'];
+			$userDetails[0]['lastname']=@$userDetails[0]['USER_LAST_NAME'];
+			//pre($userDetails);die;
+			
 			$this->set(array(
 			'userDetails' => $userDetails,
 			'_serialize' => array('userDetails')
@@ -1105,7 +1126,7 @@ class UsersController extends AppController
 			$sql = "
 			SELECT 
 				Usr.id as USER_ID,
-				Usr.email as USER_SHIPPING_EMAIL,
+				Usr.email as USER_BILLING_EMAIL,
 				Usr.status as USER_STATUS,
 				UsrAddress.street_address as USER_SHIPPING_ADDRESS,
 				UsrAddress.city as USER_SHIPPING_CITY,
@@ -1114,13 +1135,14 @@ class UsersController extends AppController
 				UsrAddress.postalcode as USER_SHIPPING_POSTAL_CODE,
 				UsrAddress.telephone as USER_SHIPPING_CONTACT_NO,
 				UsrAddress.fax_no as USER_SHIPPING_FAX_NO,
-				UsrDetails.firstname as USER_SHIPPING_FIRSTNAME,
-				UsrDetails.lastname as USER_SHIPPING_LASTNAME,
-				CONCAT(UsrDetails.firstname,' ',UsrDetails.lastname) as USER_SHIPPING_RECEIVER_NAME,
+				UsrAddress.receiver_name as USER_SHIPPING_RECEIVER_NAME,
 				UsrDetails.mobile as USER_SHIPPING_MOBILE,
-				UsrDetails.blockno as USER_SHIPPING_BLOCK,
-				UsrDetails.unitno as USER_SHIPPING_UNITNO,
-				UsrBillingAddress.sender_name as USER_BILLING_SENDERNAME,
+				UsrAddress.block_no as USER_SHIPPING_BLOCK,
+				UsrAddress.unit_no as USER_SHIPPING_UNITNO,
+				UsrAddress.shipping_email as USER_SHIPPING_EMAIL,
+				UsrBillingAddress.firstname as USER_BILLING_FIRSTNAME,
+				UsrBillingAddress.lastname as USER_BILLING_LASTNAME,
+				CONCAT(UsrBillingAddress.firstname,' ',UsrBillingAddress.lastname) as USER_BILLING_SENDERNAME,
 				UsrBillingAddress.telephone as USER_BILLING_CONTACT_NO,
 				UsrBillingAddress.fax_no as USER_BILLING_FAXNO,
 				UsrBillingAddress.email_address as USER_BILLING_EMAIL,
@@ -1141,6 +1163,7 @@ class UsersController extends AppController
 			
 			
 			$userDetails = $connection->execute($sql)->fetchAll('assoc');
+
 			
 			$this->set(array(
 			'userDetails' => $userDetails,
@@ -1157,6 +1180,21 @@ class UsersController extends AppController
 		$connection = ConnectionManager::get('default');
 		$session = $this->request->session();
 		$current_user = $this->request->session()->read('Current_User');
+
+		$arrName = explode(' ',$_REQUEST['USER_BILLING_SENDERNAME']);
+		$firtname = $arrName[0];
+		$lastname = $arrName[1];
+	
+
+		$arrName2 = explode(' ',$_REQUEST['USER_SHIPPING_RECEIVER_NAME']);
+		$receiver_firtname = @$arrName2[0];
+		$receiver_lastname = @$arrName2[1];
+
+
+		$shipping_telephoneno = @$_REQUEST['USER_SHIPPING_CONTACT_NO'];	
+
+		$shipping_telephoneno = (int)$shipping_telephoneno;
+	
 
 		// GET USER TOKEN
 		require_once(ROOT .DS. "Vendor" . DS  . "Users" . DS . "Users.php");		
@@ -1180,8 +1218,12 @@ class UsersController extends AppController
 			
 				$UserBillings = TableRegistry::get('UserBillings');
 				$billing = $UserBillings->newEntity();
+		
+				$cityname = @$_REQUEST['USER_SHIPPING_CITYNAME'];
 
 				$billing['user_id']= @$user_id;
+				$billing['firstname']= @$firtname;
+				$billing['lastname']= @$lastname;
 				$billing['sender_name']= @$_REQUEST['USER_BILLING_SENDERNAME'];
 				$billing['telephone']=@$_REQUEST['USER_BILLING_CONTACT_NO'];
 				$billing['fax_no']=@$_REQUEST['USER_BILLING_FAXNO'];
@@ -1208,6 +1250,8 @@ class UsersController extends AppController
 					$UserBillingsRS = $UserBillings->get(@$arrUserBillings->toArray()[0]->id);
 					//pre($UserBillingsRS->id);
 					$billing['id']= @$UserBillingsRS->id;
+					$billing['firstname']= @$firtname;
+					$billing['lastname']= @$lastname;
 					$billing['sender_name']= @$_REQUEST['USER_BILLING_SENDERNAME'];
 					$billing['telephone']=@$_REQUEST['USER_BILLING_CONTACT_NO'];
 					$billing['fax_no']=@$_REQUEST['USER_BILLING_FAXNO'];
@@ -1228,40 +1272,56 @@ class UsersController extends AppController
 				//UPDATE SHIPPING ADDRESS BOOK
 
 				$UsrAddress = TableRegistry::get('UserAddresses');
-				$shipping = $UsrAddress->newEntity();
+				$UserDetails = TableRegistry::get('UserDetails');
 
+				$shipping = $UsrAddress->newEntity();
+				$User_details = $UserDetails->newEntity();
+
+
+			
+				
 				$shipping['user_id']= @$user_id;
 				$shipping['receiver_name']= @$_REQUEST['USER_SHIPPING_RECEIVER_NAME'];
 				$shipping['street_address']=@$_REQUEST['USER_SHIPPING_ADDRESS'];
-				$shipping['city']=@$_REQUEST['USER_SHIPPING_EMAIL'];
+				$shipping['shipping_email']=@$_REQUEST['USER_SHIPPING_EMAIL'];
+				$shipping['city']=@$cityname;
 				$shipping['state']=@$_REQUEST['USER_SHIPPING_STATE'];
 				$shipping['country']='SINGAPORE';
 				$shipping['postalcode']=@$_REQUEST['USER_SHIPPING_POSTAL_CODE'];
-				$shipping['telephone']=@$_REQUEST['USER_SHIPPING_CONTACT_NO'];				
+				$shipping['unit_no']=@$_REQUEST['USER_SHIPPING_UNITNO'];
+				$shipping['telephone']=(int)@$shipping_telephoneno;				
 				$shipping['fax_no']=@$_REQUEST['USER_SHIPPING_FAX_NO'];
 
 			
-				$arrUsrAddress = $UsrAddress->find('all')->where(['user_id'=>$user_id]);
+				$arrUsrAddress = $UsrAddress->find('all')->where(['user_id'=>$user_id])->toArray();
+
+				
+			
 				//CHECK IF USER'S DATA EXISTS.
 				
-				if(empty($arrUsrAddress)){
-
+				if(empty($arrUsrAddress)){				
+					
 					//SAVE
 					$UsrAddress->save($shipping);
 					
 				}else{
-
+					
+				
 					//Update ....
-					$UserShippingRS = $UsrAddress->get($arrUsrAddress->toArray()[0]->id);
-					//pre($UserBillingsRS->id);
-					$shipping['id']= @$UserBillingsRS->id;
+					$UserShippingRS = $UsrAddress->get($arrUsrAddress[0]->id);
+				
+					$shipping['id']= @$UserShippingRS->id;
+
+					$shipping['user_id']= @$user_id;
 					$shipping['receiver_name']= @$_REQUEST['USER_SHIPPING_RECEIVER_NAME'];
 					$shipping['street_address']=@$_REQUEST['USER_SHIPPING_ADDRESS'];
-					$shipping['city']=@$_REQUEST['USER_SHIPPING_EMAIL'];
+					$shipping['shipping_email']=@$_REQUEST['USER_SHIPPING_EMAIL'];
+					$shipping['city']=@$cityname;
 					$shipping['state']=@$_REQUEST['USER_SHIPPING_STATE'];
 					$shipping['country']='SINGAPORE';
 					$shipping['postalcode']=@$_REQUEST['USER_SHIPPING_POSTAL_CODE'];
-					$shipping['telephone']=@$_REQUEST['USER_SHIPPING_CONTACT_NO'];				
+					$shipping['unit_no']=@$_REQUEST['USER_SHIPPING_UNITNO'];
+					$shipping['telephone']=(int)@$shipping_telephoneno;				
 					$shipping['fax_no']=@$_REQUEST['USER_SHIPPING_FAX_NO'];
 					
 					$UsrAddress->save($shipping);

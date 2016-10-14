@@ -99,6 +99,10 @@ class UserBillingsTable extends Table
             ->requirePresence('country', 'create')
             ->notEmpty('country');
 
+		
+		$validator->allowEmpty('company');
+		$validator->allowEmpty('position');
+
         return $validator;
     }
 

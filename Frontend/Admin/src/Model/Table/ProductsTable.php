@@ -107,9 +107,7 @@ class ProductsTable extends Table
         $validator
             ->allowEmpty('title');
 
-        $validator
-            ->allowEmpty('product_desc');
-
+       
         $validator
             ->allowEmpty('status');
 

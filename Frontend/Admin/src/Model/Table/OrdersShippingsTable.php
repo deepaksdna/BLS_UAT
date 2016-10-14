@@ -59,41 +59,31 @@ class OrdersShippingsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('firstname', 'create')
-            ->notEmpty('firstname');
+            ->allowEmpty('firstname');
 
         $validator
-            ->requirePresence('lastname', 'create')
-            ->notEmpty('lastname');
+            ->allowEmpty('lastname');
 
         $validator
-            ->email('email')
-            ->requirePresence('email', 'create')
-            ->notEmpty('email');
+            ->allowEmpty('email');
 
         $validator
-            ->requirePresence('street_address', 'create')
-            ->notEmpty('street_address');
+            ->allowEmpty('street_address');
 
         $validator
-            ->requirePresence('city', 'create')
-            ->notEmpty('city');
+            ->allowEmpty('city');
 
         $validator
-            ->requirePresence('country', 'create')
-            ->notEmpty('country');
+            ->allowEmpty('country');
 
         $validator
-            ->requirePresence('pincode', 'create')
-            ->notEmpty('pincode');
+		->allowEmpty('pincode');
 
         $validator
-            ->requirePresence('phone', 'create')
-            ->notEmpty('phone');
+            ->allowEmpty('phone');
 
         $validator
-            ->requirePresence('mobile', 'create')
-            ->notEmpty('mobile');
+            ->allowEmpty('mobile');
 
         return $validator;
     }
@@ -107,7 +97,6 @@ class OrdersShippingsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['order_id'], 'Orders'));
         return $rules;
     }

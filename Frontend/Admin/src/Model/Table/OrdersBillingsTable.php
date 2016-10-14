@@ -59,34 +59,25 @@ class OrdersBillingsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('street_address', 'create')
-            ->notEmpty('street_address');
+            ->allowEmpty('street');
 
-        $validator
-            ->requirePresence('city', 'create')
-            ->notEmpty('city');
+        $validator  
+            ->allowEmpty('city');
 
-        $validator
-            ->requirePresence('state', 'create')
-            ->notEmpty('state');
+        $validator    
+            ->allowEmpty('state');
 
-        $validator
-            ->requirePresence('country', 'create')
-            ->notEmpty('country');
+        $validator  
+            ->allowEmpty('country');
 
-        $validator
-            ->requirePresence('postalcode', 'create')
-            ->notEmpty('postalcode');
+        $validator   
+            ->allowEmpty('postalcode');
 
-        $validator
-            ->integer('telephone')
-            ->requirePresence('telephone', 'create')
-            ->notEmpty('telephone');
+        $validator    
+            ->allowEmpty('telephone');
 
-        $validator
-            ->integer('fax_no')
-            ->requirePresence('fax_no', 'create')
-            ->notEmpty('fax_no');
+        $validator         
+            ->allowEmpty('fax_no');
 
         return $validator;
     }

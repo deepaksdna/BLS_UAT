@@ -801,7 +801,7 @@ goto emptyPromo;
 			}
 			$prices['final_price'] = $prices['final_item_price']*$prices['quantity'];
 		}else{
-			
+			$prices['final_item_price']=$prices['list_price'];
 			$prices['maximumDiscount']=0;
 			$prices['final_price']=$prices['list_price']*$prices['quantity'];
 		}

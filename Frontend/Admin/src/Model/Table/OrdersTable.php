@@ -86,35 +86,18 @@ class OrdersTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
-
         $validator
-            ->requirePresence('user_comments', 'create')
-            ->notEmpty('user_comments');
-
+            ->allowEmpty('user_comments');
         $validator
-            ->requirePresence('admin_comments', 'create')
-            ->notEmpty('admin_comments');
-
-        $validator
-            ->integer('transactionCode')
-            ->requirePresence('transactionCode', 'create')
-            ->notEmpty('transactionCode');
-
-        $validator
-            ->integer('refrenceCode')
-            ->requirePresence('refrenceCode', 'create')
-            ->notEmpty('refrenceCode');
-
-        $validator
-            ->integer('invoiceCode')
-            ->requirePresence('invoiceCode', 'create')
-            ->notEmpty('invoiceCode');
-
-        $validator
-            ->integer('otherCode')
-            ->requirePresence('otherCode', 'create')
-            ->notEmpty('otherCode');
-
+            ->allowEmpty('admin_comments');
+        $validator         
+            ->allowEmpty('transactionCode');
+        $validator        
+            ->allowEmpty('refrenceCode');
+        $validator        
+            ->allowEmpty('invoiceCode');
+        $validator         
+            ->allowEmpty('otherCode');
         return $validator;
     }
 

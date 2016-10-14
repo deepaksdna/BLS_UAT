@@ -79,8 +79,6 @@ class UserAddressesTable extends Table
 			
 		$validator
             ->allowEmpty('fax_no');	
-			
-			 	
 
         return $validator;
     }

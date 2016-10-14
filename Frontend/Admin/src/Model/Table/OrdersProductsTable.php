@@ -67,24 +67,16 @@ class OrdersProductsTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
-
         $validator
             ->integer('product_quantity')
             ->requirePresence('product_quantity', 'create')
             ->notEmpty('product_quantity');
-
         $validator
             ->requirePresence('price', 'create')
             ->notEmpty('price');
-
         $validator
             ->requirePresence('discounted_price', 'create')
             ->notEmpty('discounted_price');
-
-        $validator
-            ->requirePresence('final_price', 'create')
-            ->notEmpty('final_price');
-
         return $validator;
     }
 

@@ -28,9 +28,9 @@ class CheckoutController extends AppController
 		
     }
 	
-//************************************************
+//**********************************************************
 // Method to fetch all details for checkout Front-End page
-//************************************************
+//**********************************************************
 	
 public function detailsToCheckout($token=null,$user_id=null){
 		header('Content-Type: application/json');
@@ -334,7 +334,7 @@ goto emptyPromo;
 			}
 			$prices['final_price'] = $prices['final_item_price']*$prices['quantity'];
 		}else{
-			
+			$prices['final_item_price']=$prices['list_price'];
 			$prices['maximumDiscount']=0;
 			$prices['final_price']=$prices['list_price']*$prices['quantity'];
 		}
@@ -461,12 +461,5 @@ goto emptyPromo;
 	return $prices;
 	} 
 	
-//************************************************
-// Method to Empty cart on Success checkout
-//************************************************		
-	public function emptyCart(){
-			
-	}	
-
 
 }
